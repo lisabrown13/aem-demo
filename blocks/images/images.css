@@ -1,0 +1,574 @@
+/**
+ * EDS Block: Images
+ * 
+ * XMP METADATA CONTEXT:
+ * - Block Type: images (eds:blockType=images)
+ * - Supports Themes: None, Light, Dark
+ * - Breakpoints: 600px, 900px, 1200px (mobile-first)
+ * - Typical Keywords: images, photos, gallery, pictures, media, visuals, figure
+ * - Description: Images block for displaying single or multiple images with captions
+ * - Complexity: Low to Medium
+ * 
+ * EXPECTED STRUCTURE:
+ * - Main wrapper: .images.block with data-block-name="images"
+ * - Image container: .images-wrapper (for multiple images) or .image-container (single)
+ * - Figure elements:
+ *   - <figure> Semantic wrapper for image + caption
+ *   - <img> The actual image element
+ *   - <figcaption> Image caption/description
+ *   - <picture> Responsive image with multiple sources
+ * 
+ * IMAGE LAYOUT VARIATIONS (from XMP metadata):
+ * - Single image: Full-width or constrained width
+ * - Gallery grid: 2-4 columns, equal heights
+ * - Masonry: Varied heights, Pinterest-style
+ * - Slideshow/Carousel: Horizontal scrolling images
+ * - Side-by-side: Two images next to each other
+ * 
+ * IMAGE SIZING (from XMP metadata):
+ * - Full-width: 100% width, responsive height
+ * - Contained: Max width with centered alignment
+ * - Cover: Fill container, crop if needed
+ * - Contain: Fit within container, no crop
+ * 
+ * THEME VARIATIONS (from XMP metadata):
+ * - None: Images on default/transparent background
+ * - Light: Images on light background with borders
+ * - Dark: Images on dark background
+ * 
+ * COLOR VARIABLES (must use these, not hex codes):
+ * - Borders: var(--border-image), var(--border-light)
+ * - Captions: var(--text-secondary), var(--text-inverse)
+ * - Backgrounds: var(--bg-light), var(--bg-dark)
+ * - Overlays: var(--overlay-image)
+ */
+
+/* Base styles - Mobile first (0-599px) */
+/* XMP Context: Default images block wrapper */
+.images.block {
+  /* EDS Pattern: Standard block padding */
+  padding: 2rem 1rem;
+  
+  /* XMP: Default background */
+  background-color: transparent;
+}
+
+/* XMP Context: Images wrapper (for multiple images) */
+.images-wrapper {
+  /* XMP: Grid layout for multiple images */
+  display: grid;
+  
+  /* XMP Metadata: Single column on mobile */
+  grid-template-columns: 1fr;
+  
+  /* XMP: Gap between images */
+  gap: 1.5rem; /* 24px */
+  
+  /* XMP: Constrain max width */
+  max-width: 75rem; /* 1200px */
+  margin: 0 auto;
+}
+
+/* XMP Context: Figure element (semantic image wrapper) */
+.images.block figure {
+  /* XMP: Remove default browser margins */
+  margin: 0;
+  
+  /* XMP: Position relative for caption overlay */
+  position: relative;
+  
+  /* XMP: Ensure proper display */
+  display: block;
+}
+
+/* XMP Context: Image element */
+.images.block img {
+  /* XMP: Full width of container */
+  width: 100%;
+  
+  /* XMP: Auto height to maintain aspect ratio */
+  height: auto;
+  
+  /* XMP: Smooth edges */
+  display: block; /* Remove bottom gap */
+  
+  /* XMP: Optional rounded corners */
+  border-radius: 0.5rem; /* 8px */
+  
+  /* XMP Performance: Lazy loading hint */
+  /* loading="lazy" should be in HTML */
+}
+
+/* XMP Context: Figcaption (image caption) */
+.images.block figcaption {
+  /* XMP: Caption text size */
+  font-size: 0.875rem; /* 14px */
+  
+  /* XMP: Line height for readability */
+  line-height: 1.5;
+  
+  /* XMP Theme: Secondary text color (muted) */
+  color: var(--text-secondary); /* NOT #666 */
+  
+  /* XMP: Spacing above caption */
+  margin-top: 0.75rem; /* 12px */
+  
+  /* XMP: Center align by default */
+  text-align: center;
+  
+  /* XMP: Italic for visual distinction */
+  font-style: italic;
+}
+
+/* 
+ * VARIANT: Single Image (full-width or contained)
+ * XMP Context: Single prominent image
+ */
+.images.block.single-image .image-container {
+  /* XMP: Constrain width for single images */
+  max-width: 60rem; /* 960px */
+  margin: 0 auto;
+}
+
+/* XMP Variant: Full-width single image (no max-width) */
+.images.block.single-image.full-width .image-container {
+  max-width: none;
+}
+
+/* 
+ * VARIANT: Gallery Grid (2-4 columns)
+ * XMP Context: Multiple images in grid layout
+ */
+
+/* XMP: Default gallery (2 columns on tablet, 3 on desktop) */
+.images.block.gallery .images-wrapper {
+  /* Mobile already set to 1 column */
+}
+
+@media (min-width: 600px) {
+  /* XMP Metadata: 2 columns on tablet */
+  .images.block.gallery .images-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  /* XMP Metadata: 3 columns on desktop */
+  .images.block.gallery .images-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* XMP Variant: 4-column gallery */
+.images.block.gallery.four-columns .images-wrapper {
+  /* Mobile: still 1 column */
+}
+
+@media (min-width: 600px) {
+  .images.block.gallery.four-columns .images-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .images.block.gallery.four-columns .images-wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 
+ * VARIANT: Equal Height Images (object-fit: cover)
+ * XMP Context: Crop images to same height for grid consistency
+ */
+.images.block.equal-height img {
+  /* XMP: Fixed height for grid consistency */
+  height: 18rem; /* 288px - can adjust */
+  
+  /* XMP: Cover to fill container, crop if needed */
+  object-fit: cover;
+}
+
+/* 
+ * VARIANT: Side-by-Side (2 images next to each other)
+ * XMP Context: Two images in a row
+ */
+.images.block.side-by-side .images-wrapper {
+  /* XMP: 2 columns even on mobile (if space allows) */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .images.block.side-by-side .images-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 
+ * VARIANT: Bordered Images
+ * XMP Context: Add border around images
+ */
+.images.block.bordered img {
+  /* XMP Theme: Light border */
+  border: 1px solid var(--border-image); /* NOT #e0e0e0 */
+  
+  /* XMP: Padding inside border (optional) */
+  padding: 0.5rem;
+  
+  /* XMP: White background behind image */
+  background-color: var(--bg-card-light); /* NOT #fff */
+}
+
+/* 
+ * VARIANT: Shadow Images
+ * XMP Context: Add drop shadow to images
+ */
+.images.block.shadow img {
+  /* XMP: Subtle drop shadow */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  /* XMP: Enhance shadow on hover */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.images.block.shadow img:hover {
+  /* XMP: Lift and enhance shadow on hover */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+
+/* 
+ * VARIANT: Rounded Images (circular or heavily rounded)
+ * XMP Context: Circular profile images or heavily rounded corners
+ */
+.images.block.rounded img {
+  /* XMP: Circular images */
+  border-radius: 50%;
+  
+  /* XMP: Square aspect ratio for circles */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+/* XMP Variant: Heavily rounded (but not circular) */
+.images.block.rounded-corners img {
+  border-radius: 1.5rem; /* 24px - heavy rounding */
+}
+
+/* 
+ * VARIANT: Lightbox/Clickable Images
+ * XMP Context: Images that open in lightbox when clicked
+ */
+.images.block.lightbox figure {
+  /* XMP: Cursor indicates clickability */
+  cursor: pointer;
+  
+  /* XMP: Position for overlay */
+  position: relative;
+  overflow: hidden;
+}
+
+/* XMP: Overlay on hover (indicates clickability) */
+.images.block.lightbox figure::after {
+  /* XMP: Create overlay */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* XMP: Dark overlay */
+  background-color: rgba(0, 0, 0, 0.3);
+  
+  /* XMP: Hidden by default */
+  opacity: 0;
+  
+  /* XMP: Smooth transition */
+  transition: opacity 0.3s ease;
+  
+  /* XMP: Pointer events pass through */
+  pointer-events: none;
+}
+
+.images.block.lightbox figure:hover::after {
+  /* XMP: Show overlay on hover */
+  opacity: 1;
+}
+
+/* XMP: Zoom icon indicator (optional) */
+.images.block.lightbox figure::before {
+  content: '🔍'; /* Or use SVG icon */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.images.block.lightbox figure:hover::before {
+  opacity: 1;
+}
+
+/* 
+ * RESPONSIVE PICTURE ELEMENT
+ * XMP Context: Art direction with different images per breakpoint
+ */
+.images.block picture {
+  /* XMP: Picture is inline by default, make block */
+  display: block;
+}
+
+.images.block picture img {
+  /* XMP: Ensure image fills picture container */
+  width: 100%;
+  height: auto;
+}
+
+/* 
+ * IMAGE CAPTIONS (additional variants)
+ * XMP Context: Different caption positions
+ */
+
+/* XMP Variant: Caption overlay (on image, bottom) */
+.images.block.caption-overlay figcaption {
+  /* XMP: Position at bottom of image */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  /* XMP: Dark background for readability */
+  background-color: rgba(0, 0, 0, 0.7);
+  
+  /* XMP: Light text on dark background */
+  color: var(--text-inverse); /* NOT #fff */
+  
+  /* XMP: Padding for text */
+  padding: 1rem;
+  
+  /* XMP: No margin (positioned absolutely) */
+  margin: 0;
+  
+  /* XMP: Not italic (harder to read on overlay) */
+  font-style: normal;
+  
+  /* XMP: Left align for overlay */
+  text-align: left;
+}
+
+/* XMP Variant: Left-aligned caption (below image) */
+.images.block.caption-left figcaption {
+  text-align: left;
+}
+
+/* XMP Variant: Right-aligned caption (below image) */
+.images.block.caption-right figcaption {
+  text-align: right;
+}
+
+/* EDS Responsive Breakpoints - DO NOT MODIFY structure */
+/* XMP Context: Tablet styles (600-899px) */
+@media (min-width: 600px) {
+  /* XMP: Increase block padding on tablet */
+  .images.block {
+    padding: 3rem 2rem;
+  }
+  
+  /* XMP: Larger gap on tablet */
+  .images-wrapper {
+    gap: 2rem;
+  }
+  
+  /* XMP: Slightly larger caption on tablet */
+  .images.block figcaption {
+    font-size: 0.9375rem; /* 15px */
+  }
+}
+
+/* XMP Context: Desktop styles (900px+) */
+@media (min-width: 900px) {
+  /* XMP: Maximum block padding on desktop */
+  .images.block {
+    padding: 4rem 2rem;
+  }
+  
+  /* XMP: Maximum gap on desktop */
+  .images-wrapper {
+    gap: 2.5rem;
+  }
+  
+  /* XMP: Larger caption on desktop */
+  .images.block figcaption {
+    font-size: 1rem; /* 16px */
+  }
+}
+
+/* 
+ * THEME-SPECIFIC OVERRIDES (applied via section metadata)
+ * XMP Context: These styles are applied when theme is specified
+ */
+
+/* XMP Theme: Light variant */
+.images.light {
+  /* Light background */
+  background-color: var(--bg-light); /* NOT #f9f9f9 */
+}
+
+.images.light figcaption {
+  /* Dark text on light background */
+  color: var(--text-primary);
+}
+
+/* XMP Theme: Dark variant */
+.images.dark {
+  /* Dark background */
+  background-color: var(--bg-dark); /* NOT #1a1a1a */
+}
+
+.images.dark figcaption {
+  /* Light text on dark background */
+  color: var(--text-inverse); /* NOT #fff */
+}
+
+/*
+ * ACCESSIBILITY ENHANCEMENTS
+ * XMP Context: Ensure images meet WCAG standards
+ */
+
+/* XMP Accessibility: All images must have alt text (in HTML) */
+/* Images without alt should be flagged as error */
+
+/* XMP Accessibility: Focus on clickable images */
+.images.block.lightbox figure:focus-within {
+  /* Clear focus outline */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 4px;
+  border-radius: 0.5rem;
+}
+
+/* XMP Accessibility: Ensure captions have sufficient contrast */
+.images.block figcaption {
+  /* 4.5:1 contrast ratio (handled by color variables) */
+}
+
+/* XMP Accessibility: Decorative images */
+/* Use alt="" in HTML for decorative images */
+/* Use role="presentation" for purely decorative images */
+
+/*
+ * PERFORMANCE OPTIMIZATIONS
+ * XMP Context: Optimize image loading
+ */
+
+/* XMP Performance: Lazy loading (in HTML attribute) */
+/* <img loading="lazy"> for images below fold */
+
+/* XMP Performance: Aspect ratio boxes (prevent layout shift) */
+.images.block figure {
+  /* Aspect ratio prevents CLS (Cumulative Layout Shift) */
+  /* Set in HTML or use aspect-ratio CSS */
+}
+
+/* XMP: Common aspect ratios */
+.images.block img.aspect-16-9 {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.images.block img.aspect-4-3 {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.images.block img.aspect-1-1 {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.images.block img.aspect-3-2 {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/*
+ * XMP METADATA SUMMARY FOR AI AGENTS:
+ * 
+ * This CSS file defines the images block styling with:
+ * - Single image and gallery grid layouts
+ * - Responsive grid (1 col mobile → 2 col tablet → 3-4 col desktop)
+ * - Semantic figure/figcaption structure
+ * - Multiple variants (bordered, shadow, rounded, lightbox)
+ * - Caption positioning (center, left, right, overlay)
+ * - Theme support (None, Light, Dark)
+ * - Mobile-first responsive approach
+ * - CSS custom properties for all colors
+ * - Accessibility (alt text required, focus states, contrast)
+ * - Performance (lazy loading, aspect ratios)
+ * 
+ * IMAGE LAYOUT PATTERNS:
+ * - Single image: Full-width or contained (max 960px)
+ * - Gallery: 1→2→3 columns (mobile→tablet→desktop)
+ * - Side-by-side: 2 columns at tablet+
+ * - Four-column: 1→2→4 columns
+ * 
+ * IMAGE SIZING OPTIONS:
+ * - Responsive: width 100%, height auto (maintains aspect ratio)
+ * - Equal height: Fixed height with object-fit: cover
+ * - Aspect ratio: aspect-ratio CSS property (16:9, 4:3, 1:1, 3:2)
+ * 
+ * CAPTION OPTIONS:
+ * - Below image (default): Centered, italic, gray text
+ * - Caption overlay: Positioned on image bottom, dark background
+ * - Left/right aligned: Text alignment variants
+ * 
+ * If the Figma frame differs from this reference block:
+ * - Check layout (single, gallery, side-by-side)
+ * - Check number of columns (2, 3, 4)
+ * - Check image aspect ratio (16:9, 4:3, 1:1, square)
+ * - Check if images have equal heights (object-fit: cover)
+ * - Check if images have borders or shadows
+ * - Check border-radius (square, rounded, circular)
+ * - Check caption position (below, overlay, left, right)
+ * - Check if images are clickable (lightbox)
+ * - Check gap between images (1.5-2.5rem)
+ * 
+ * Common gaps to look for:
+ * - Figma shows 4 columns → Apply .four-columns class
+ * - Figma shows equal height grid → Apply .equal-height class
+ * - Figma shows circular images → Apply .rounded class
+ * - Figma shows image borders → Apply .bordered class
+ * - Figma shows drop shadows → Apply .shadow class
+ * - Figma shows caption on image → Apply .caption-overlay class
+ * - Figma shows clickable images → Apply .lightbox class
+ * - Figma shows different gaps → Adjust gap property
+ * - Figma shows different aspect ratios → Add aspect-ratio CSS
+ * - Figma uses hex colors → Must convert to var() custom properties
+ * 
+ * Accessibility requirements (WCAG):
+ * - All images MUST have alt text (alt="" for decorative)
+ * - Alt text should describe image content meaningfully
+ * - Captions must have 4.5:1 contrast ratio
+ * - Clickable images must have visible focus indicator
+ * - Don't use images of text (use actual text)
+ * - Complex images need detailed descriptions (longdesc or adjacent text)
+ * 
+ * Performance best practices:
+ * - Use loading="lazy" for images below fold
+ * - Use aspect-ratio to prevent layout shift (CLS)
+ * - Use <picture> for art direction (different images per breakpoint)
+ * - Use srcset for resolution switching (1x, 2x, 3x)
+ * - Compress images appropriately (WebP preferred)
+ * - Serve responsive image sizes (don't load 3000px on mobile)
+ * 
+ * Image formats:
+ * - WebP: Modern format, best compression (preferred)
+ * - JPEG: Photos, gradients (fallback)
+ * - PNG: Transparency, graphics
+ * - SVG: Icons, logos, simple graphics
+ * - AVIF: Newer format, even better compression (progressive enhancement)
+ */
