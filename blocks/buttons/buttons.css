@@ -1,0 +1,526 @@
+/**
+ * EDS Block: Buttons
+ * 
+ * XMP METADATA CONTEXT:
+ * - Block Type: button (eds:blockType=button)
+ * - Supports Themes: None, Light, Dark
+ * - Breakpoints: 600px, 900px, 1200px (mobile-first)
+ * - Typical Keywords: buttons, cta, call-to-action, links, actions, primary, secondary
+ * - Description: Button block for call-to-action buttons and action links
+ * - Complexity: Low to Medium
+ * 
+ * EXPECTED STRUCTURE:
+ * - Main wrapper: .button-container or .buttons.block with data-block-name="button"
+ * - Button elements:
+ *   - <a class="button"> Link styled as button
+ *   - <button class="button"> Actual button element
+ * - Button variants:
+ *   - .button.primary Main CTA (filled, colored background)
+ *   - .button.secondary Secondary action (outline/ghost style)
+ *   - .button.tertiary Subtle action (text link style)
+ *   - .button.large Larger size
+ *   - .button.small Smaller size
+ * 
+ * BUTTON STYLE VARIATIONS (from XMP metadata):
+ * - Primary: Solid background, high contrast (main CTA)
+ * - Secondary: Outline/border, transparent background
+ * - Tertiary: Text-only, minimal styling (link-like)
+ * - Ghost: Transparent with border (often on dark backgrounds)
+ * - Icon button: Button with icon (left, right, or icon-only)
+ * 
+ * THEME VARIATIONS (from XMP metadata):
+ * - None: Default button colors (brand colors)
+ * - Light: Buttons on light backgrounds
+ * - Dark: Buttons on dark backgrounds (inverted colors)
+ * 
+ * COLOR VARIABLES (must use these, not hex codes):
+ * - Primary: var(--color-cta-primary), var(--color-cta-hover)
+ * - Secondary: var(--color-cta-secondary), var(--color-cta-secondary-hover)
+ * - Text: var(--text-inverse), var(--text-primary)
+ * - Borders: var(--border-button)
+ */
+
+/* Base styles - Mobile first (0-599px) */
+/* XMP Context: Button container wrapper */
+.button-container,
+.buttons.block {
+  /* EDS Pattern: Standard block padding */
+  padding: 2rem 1rem;
+  
+  /* XMP: Center buttons by default */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem; /* Space between multiple buttons */
+  
+  /* XMP: Default background */
+  background-color: transparent;
+}
+
+/* XMP Context: Base button styles (applies to all button variants) */
+.button {
+  /* Layout: Inline-flex for icon + text alignment */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* Space between icon and text */
+  
+  /* XMP Metadata: Standard button padding */
+  padding: 0.875rem 1.75rem; /* 14px vertical, 28px horizontal */
+  
+  /* XMP: Medium font size */
+  font-size: 1rem; /* 16px */
+  
+  /* XMP: Semi-bold for prominence */
+  font-weight: 600;
+  
+  /* XMP: Line height for vertical centering */
+  line-height: 1.5;
+  
+  /* XMP: Remove default button/link styles */
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  
+  /* XMP: Rounded corners */
+  border-radius: 0.25rem; /* 4px */
+  
+  /* XMP: Smooth transitions for hover/focus states */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.1s ease;
+  
+  /* XMP: Prevent text selection on button */
+  user-select: none;
+  
+  /* XMP: Consistent text rendering */
+  font-family: inherit;
+  
+  /* XMP: Remove tap highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 
+ * VARIANT: Primary Button (main CTA)
+ * XMP Context: Filled button with brand color background
+ */
+.button.primary {
+  /* XMP Theme: Primary brand color background */
+  background-color: var(--color-cta-primary); /* NOT #0066cc */
+  
+  /* XMP: White text on colored background */
+  color: var(--text-inverse); /* NOT #fff */
+  
+  /* XMP: No border for filled button */
+  border: 2px solid transparent;
+}
+
+/* XMP Context: Primary button hover state */
+.button.primary:hover {
+  /* XMP Theme: Darker shade on hover */
+  background-color: var(--color-cta-hover); /* NOT #0052a3 */
+  
+  /* XMP: Slight lift on hover (optional) */
+  transform: translateY(-2px);
+}
+
+/* XMP Context: Primary button active/pressed state */
+.button.primary:active {
+  /* XMP: Push down when clicked */
+  transform: translateY(0);
+}
+
+/* XMP Context: Primary button focus state (keyboard navigation) */
+.button.primary:focus {
+  /* XMP Accessibility: Clear focus ring */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 4px;
+}
+
+/* 
+ * VARIANT: Secondary Button (outline/ghost style)
+ * XMP Context: Transparent background with border
+ */
+.button.secondary {
+  /* XMP: Transparent background */
+  background-color: transparent;
+  
+  /* XMP Theme: Primary brand color for text and border */
+  color: var(--color-cta-primary); /* NOT #0066cc */
+  
+  /* XMP: Colored border (2px for visibility) */
+  border: 2px solid var(--color-cta-primary);
+}
+
+/* XMP Context: Secondary button hover state */
+.button.secondary:hover {
+  /* XMP: Fill background on hover */
+  background-color: var(--color-cta-primary);
+  
+  /* XMP: Invert text color */
+  color: var(--text-inverse);
+  
+  /* XMP: Keep border color */
+  border-color: var(--color-cta-primary);
+}
+
+/* XMP Context: Secondary button focus state */
+.button.secondary:focus {
+  /* XMP Accessibility: Focus ring */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 4px;
+}
+
+/* 
+ * VARIANT: Tertiary Button (text link style)
+ * XMP Context: Minimal styling, looks like a link
+ */
+.button.tertiary {
+  /* XMP: No background */
+  background-color: transparent;
+  
+  /* XMP Theme: Link color */
+  color: var(--color-cta-primary);
+  
+  /* XMP: No border */
+  border: 2px solid transparent;
+  
+  /* XMP: Less padding (more compact) */
+  padding: 0.5rem 1rem;
+  
+  /* XMP: Underline for link affordance */
+  text-decoration: underline;
+}
+
+/* XMP Context: Tertiary button hover state */
+.button.tertiary:hover {
+  /* XMP: Darker color on hover */
+  color: var(--color-cta-hover);
+  
+  /* XMP: No background fill */
+  background-color: transparent;
+}
+
+/* XMP Context: Tertiary button focus state */
+.button.tertiary:focus {
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 2px;
+}
+
+/* 
+ * VARIANT: Ghost Button (transparent with border, for dark backgrounds)
+ * XMP Context: White outline button on dark backgrounds
+ */
+.button.ghost {
+  /* XMP: Transparent background */
+  background-color: transparent;
+  
+  /* XMP: White text on dark background */
+  color: var(--text-inverse); /* NOT #fff */
+  
+  /* XMP: White border */
+  border: 2px solid var(--text-inverse);
+}
+
+/* XMP Context: Ghost button hover state */
+.button.ghost:hover {
+  /* XMP: Fill with white on hover */
+  background-color: var(--text-inverse);
+  
+  /* XMP: Dark text on white background */
+  color: var(--text-primary);
+  
+  /* XMP: Keep border */
+  border-color: var(--text-inverse);
+}
+
+/* 
+ * SIZE VARIANTS
+ * XMP Context: Large and small button sizes
+ */
+
+/* XMP Variant: Large button */
+.button.large {
+  /* XMP: Larger padding */
+  padding: 1.125rem 2.25rem; /* 18px vertical, 36px horizontal */
+  
+  /* XMP: Larger font size */
+  font-size: 1.125rem; /* 18px */
+}
+
+/* XMP Variant: Small button */
+.button.small {
+  /* XMP: Smaller padding */
+  padding: 0.625rem 1.25rem; /* 10px vertical, 20px horizontal */
+  
+  /* XMP: Smaller font size */
+  font-size: 0.875rem; /* 14px */
+}
+
+/* 
+ * ICON BUTTONS
+ * XMP Context: Buttons with icons (left, right, or icon-only)
+ */
+
+/* XMP Context: Icon within button */
+.button .icon {
+  /* XMP: Icon size */
+  width: 1.25rem; /* 20px */
+  height: 1.25rem;
+  
+  /* XMP: Ensure consistent sizing */
+  flex-shrink: 0;
+}
+
+/* XMP Context: Icon-only button (no text) */
+.button.icon-only {
+  /* XMP: Square padding for circular/square shape */
+  padding: 0.875rem;
+  
+  /* XMP: No gap needed (no text) */
+  gap: 0;
+}
+
+.button.icon-only .icon {
+  /* XMP: Slightly larger icon when no text */
+  width: 1.5rem; /* 24px */
+  height: 1.5rem;
+}
+
+/* XMP Context: Icon on left (default) */
+.button .icon {
+  /* Already in correct order with gap */
+}
+
+/* XMP Context: Icon on right */
+.button.icon-right {
+  /* XMP: Reverse flex direction to put icon after text */
+  flex-direction: row-reverse;
+}
+
+/* 
+ * BUTTON GROUPS
+ * XMP Context: Multiple buttons side-by-side
+ */
+
+/* XMP Context: Button group container */
+.button-group {
+  /* XMP: Flexbox for button alignment */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  
+  /* XMP: Center on mobile */
+  justify-content: center;
+}
+
+/* XMP Context: Stacked buttons on mobile */
+@media (max-width: 599px) {
+  .button-group.stacked {
+    /* XMP: Full width stacked buttons on mobile */
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .button-group.stacked .button {
+    /* XMP: Full width buttons */
+    width: 100%;
+  }
+}
+
+/* 
+ * DISABLED STATE
+ * XMP Context: Disabled/inactive buttons
+ */
+
+.button:disabled,
+.button.disabled {
+  /* XMP: Reduced opacity */
+  opacity: 0.5;
+  
+  /* XMP: No pointer cursor */
+  cursor: not-allowed;
+  
+  /* XMP: No hover effects */
+  pointer-events: none;
+}
+
+/* EDS Responsive Breakpoints - DO NOT MODIFY structure */
+/* XMP Context: Tablet styles (600-899px) */
+@media (min-width: 600px) {
+  /* XMP: Slightly larger buttons on tablet */
+  .button {
+    padding: 1rem 2rem; /* 16px vertical, 32px horizontal */
+    font-size: 1.0625rem; /* 17px */
+  }
+  
+  /* XMP: Increase container padding */
+  .button-container,
+  .buttons.block {
+    padding: 3rem 2rem;
+  }
+}
+
+/* XMP Context: Desktop styles (900px+) */
+@media (min-width: 900px) {
+  /* XMP: Maximum button size on desktop */
+  .button {
+    padding: 1.125rem 2.25rem; /* 18px vertical, 36px horizontal */
+    font-size: 1.125rem; /* 18px */
+  }
+  
+  /* XMP: Maximum container padding */
+  .button-container,
+  .buttons.block {
+    padding: 4rem 2rem;
+  }
+  
+  /* XMP: Left-align button groups on desktop (optional) */
+  .button-group.left-aligned {
+    justify-content: flex-start;
+  }
+  
+  /* XMP: Right-align button groups on desktop (optional) */
+  .button-group.right-aligned {
+    justify-content: flex-end;
+  }
+}
+
+/* 
+ * THEME-SPECIFIC OVERRIDES (applied via section metadata)
+ * XMP Context: These styles are applied when theme is specified
+ */
+
+/* XMP Theme: Light variant (buttons on light background) */
+.buttons.light {
+  background-color: var(--bg-light); /* NOT #f9f9f9 */
+}
+
+/* XMP: Primary button on light background (no change needed) */
+.buttons.light .button.primary {
+  background-color: var(--color-cta-primary);
+  color: var(--text-inverse);
+}
+
+/* XMP: Secondary button on light background */
+.buttons.light .button.secondary {
+  color: var(--color-cta-primary);
+  border-color: var(--color-cta-primary);
+}
+
+/* XMP Theme: Dark variant (buttons on dark background) */
+.buttons.dark {
+  background-color: var(--bg-dark); /* NOT #1a1a1a */
+}
+
+/* XMP: Primary button on dark background (still uses brand color) */
+.buttons.dark .button.primary {
+  background-color: var(--color-cta-primary);
+  color: var(--text-inverse);
+}
+
+/* XMP: Secondary button on dark background (inverted) */
+.buttons.dark .button.secondary {
+  color: var(--text-inverse);
+  border-color: var(--text-inverse);
+}
+
+.buttons.dark .button.secondary:hover {
+  background-color: var(--text-inverse);
+  color: var(--text-primary);
+}
+
+/*
+ * ACCESSIBILITY ENHANCEMENTS
+ * XMP Context: Ensure buttons meet WCAG standards
+ */
+
+/* XMP Accessibility: All buttons must have visible focus indicator */
+.button:focus-visible {
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 4px;
+}
+
+/* XMP Accessibility: Ensure minimum click target size (44x44px) */
+.button {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* XMP Accessibility: High contrast mode support */
+@media (prefers-contrast: high) {
+  .button {
+    border-width: 3px; /* Thicker borders in high contrast */
+  }
+}
+
+/*
+ * XMP METADATA SUMMARY FOR AI AGENTS:
+ * 
+ * This CSS file defines the button block styling with:
+ * - Multiple button variants (primary, secondary, tertiary, ghost)
+ * - Size variants (default, large, small)
+ * - Icon support (left, right, icon-only)
+ * - Button groups and stacking
+ * - Theme support (None, Light, Dark)
+ * - Disabled states
+ * - Mobile-first responsive sizing
+ * - CSS custom properties for all colors
+ * - Full accessibility (focus states, min sizes, keyboard support)
+ * 
+ * BUTTON VARIANTS:
+ * - Primary: Filled background (var(--color-cta-primary)), white text
+ * - Secondary: Transparent, colored border and text (outline style)
+ * - Tertiary: Text-only, minimal styling (link-like)
+ * - Ghost: Transparent with white border (for dark backgrounds)
+ * 
+ * SIZE SCALE:
+ * - Small: 0.625rem/1.25rem padding, 0.875rem font
+ * - Default: 0.875rem/1.75rem → 1.125rem/2.25rem (mobile → desktop)
+ * - Large: 1.125rem/2.25rem padding, 1.125rem font
+ * 
+ * If the Figma frame differs from this reference block:
+ * - Check button variant (primary, secondary, tertiary, ghost)
+ * - Check button size (small, default, large)
+ * - Check if icons are present (left, right, or icon-only)
+ * - Check padding values (should use rem units)
+ * - Check border radius (default 0.25rem / 4px)
+ * - Check if buttons are stacked (mobile) or side-by-side
+ * - Check hover states (color changes, transforms)
+ * - Check focus states (outline visible for keyboard users)
+ * 
+ * Common gaps to look for:
+ * - Figma shows outline button → Apply .secondary class
+ * - Figma shows text-only button → Apply .tertiary class
+ * - Figma shows white outline on dark bg → Apply .ghost class
+ * - Figma shows larger button → Apply .large class
+ * - Figma shows icon before text → Add .icon element (default left)
+ * - Figma shows icon after text → Apply .icon-right class
+ * - Figma shows icon-only → Apply .icon-only class
+ * - Figma shows stacked buttons → Apply .button-group.stacked
+ * - Figma uses hex colors → Must convert to var() custom properties
+ * - Figma shows different border-radius → Update border-radius value
+ * - Figma shows different padding → Adjust padding values
+ * 
+ * Accessibility requirements (WCAG):
+ * - Minimum 44x44px touch target (already enforced)
+ * - 4.5:1 contrast ratio for text (use color variables)
+ * - 3:1 contrast for button vs background
+ * - Visible focus indicator (2px outline, 4px offset)
+ * - Keyboard accessible (native button/link elements)
+ * - Disabled buttons use opacity + cursor: not-allowed
+ * - Support high contrast mode (thicker borders)
+ * 
+ * Hover/Active states:
+ * - Primary: Darkens background, slight lift (-2px translateY)
+ * - Secondary: Fills background, inverts colors
+ * - Tertiary: Darkens text color
+ * - Ghost: Fills with white, inverts text
+ * - Active: Returns to normal position (translateY(0))
+ * 
+ * Icon best practices:
+ * - Use inline SVG for best control
+ * - Icon size: 1.25rem (20px) default, 1.5rem (24px) icon-only
+ * - Icons inherit color from button text (currentColor)
+ * - Gap between icon and text: 0.5rem (8px)
+ */
