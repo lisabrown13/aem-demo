@@ -1,0 +1,450 @@
+/**
+ * EDS Block: Headings
+ * 
+ * XMP METADATA CONTEXT:
+ * - Block Type: headings (eds:blockType=headings)
+ * - Supports Themes: None, Light, Highlight
+ * - Breakpoints: 600px, 900px, 1200px (mobile-first)
+ * - Typical Keywords: headings, titles, h1, h2, h3, typography, headers, hierarchy
+ * - Description: Headings block for displaying page titles, section headers, and hierarchical text structure
+ * - Complexity: Low (mostly typography, minimal layout)
+ * 
+ * EXPECTED STRUCTURE:
+ * - Main wrapper: .headings.block with data-block-name="headings"
+ * - Heading levels: h1, h2, h3, h4, h5, h6 (semantic hierarchy)
+ * - Optional wrapper: .headings-content (for centering/constraining)
+ * - Optional eyebrow: .eyebrow (small text above heading)
+ * - Optional subheading: .subheading (text below main heading)
+ * 
+ * HEADING HIERARCHY (from XMP metadata):
+ * - h1: Page title (48-64px) - Only one per page
+ * - h2: Section headings (36-48px)
+ * - h3: Subsection headings (24-32px)
+ * - h4: Component headings (20-24px)
+ * - h5: Minor headings (18-20px)
+ * - h6: Smallest headings (16-18px)
+ * 
+ * THEME VARIATIONS (from XMP metadata):
+ * - None: Default text color (dark text on light background)
+ * - Light: Ensures readability on light backgrounds
+ * - Highlight: Accent color for emphasis (var(--color-accent))
+ * 
+ * COLOR VARIABLES (must use these, not hex codes):
+ * - Text: var(--text-primary), var(--text-secondary), var(--color-accent)
+ * - Backgrounds: var(--bg-light), var(--bg-highlight)
+ * - Borders: var(--border-accent) (for underlines/dividers)
+ * 
+ * TYPOGRAPHY SCALE:
+ * - Based on 16px base font size
+ * - Uses rem units for scalability
+ * - Mobile-first: smaller on mobile, larger on desktop
+ */
+
+/* Base styles - Mobile first (0-599px) */
+/* XMP Context: Default headings block wrapper */
+.headings.block {
+  /* EDS Pattern: Standard block padding */
+  padding: 2rem 1rem;
+  
+  /* XMP: Center alignment by default (can be overridden) */
+  text-align: center;
+  
+  /* XMP: Default background (transparent unless themed) */
+  background-color: transparent;
+}
+
+/* XMP Context: Content wrapper for constraining width */
+.headings-content {
+  /* XMP: Constrain max width for readability */
+  max-width: 50rem; /* 800px */
+  
+  /* XMP: Center the content */
+  margin: 0 auto;
+}
+
+/* XMP Context: Eyebrow text (small label above heading) */
+.eyebrow {
+  /* XMP: Small uppercase text */
+  font-size: 0.875rem; /* 14px */
+  
+  /* XMP: Uppercase for visual distinction */
+  text-transform: uppercase;
+  
+  /* XMP: Letter spacing for readability in uppercase */
+  letter-spacing: 0.1em;
+  
+  /* XMP Theme: Secondary text color (muted) */
+  color: var(--text-secondary); /* NOT #666 */
+  
+  /* XMP: Semi-bold for subtle emphasis */
+  font-weight: 600;
+  
+  /* XMP: Space below eyebrow before main heading */
+  margin-bottom: 0.5rem;
+  
+  /* XMP: Remove default margins */
+  margin-top: 0;
+}
+
+/* XMP Context: Main heading (h1) - Page title level */
+.headings.block h1 {
+  /* XMP Metadata: Large heading size on mobile */
+  font-size: 2.5rem; /* 40px - mobile */
+  
+  /* XMP: Tight line height for impact */
+  line-height: 1.1;
+  
+  /* XMP Theme: Primary text color (darkest) */
+  color: var(--text-primary); /* NOT #000 */
+  
+  /* XMP: Bold weight for prominence */
+  font-weight: 700;
+  
+  /* XMP: Space below heading */
+  margin-bottom: 1rem;
+  
+  /* XMP: Remove top margin (controlled by block padding) */
+  margin-top: 0;
+}
+
+/* XMP Context: Section heading (h2) */
+.headings.block h2 {
+  /* XMP Metadata: Medium-large heading */
+  font-size: 2rem; /* 32px - mobile */
+  
+  /* XMP: Slightly relaxed line height */
+  line-height: 1.2;
+  
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary); /* NOT #000 */
+  
+  /* XMP: Bold weight */
+  font-weight: 700;
+  
+  /* XMP: Spacing */
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}
+
+/* XMP Context: Subsection heading (h3) */
+.headings.block h3 {
+  /* XMP Metadata: Medium heading */
+  font-size: 1.5rem; /* 24px - mobile */
+  
+  /* XMP: Line height for readability */
+  line-height: 1.3;
+  
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary); /* NOT #000 */
+  
+  /* XMP: Semi-bold (lighter than h1/h2) */
+  font-weight: 600;
+  
+  /* XMP: Spacing */
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}
+
+/* XMP Context: Component heading (h4) */
+.headings.block h4 {
+  /* XMP Metadata: Small-medium heading */
+  font-size: 1.25rem; /* 20px */
+  
+  /* XMP: Comfortable line height */
+  line-height: 1.4;
+  
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary);
+  
+  /* XMP: Semi-bold */
+  font-weight: 600;
+  
+  /* XMP: Spacing */
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+/* XMP Context: Minor heading (h5) */
+.headings.block h5 {
+  /* XMP Metadata: Small heading */
+  font-size: 1.125rem; /* 18px */
+  
+  /* XMP: Line height */
+  line-height: 1.4;
+  
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary);
+  
+  /* XMP: Semi-bold */
+  font-weight: 600;
+  
+  /* XMP: Spacing */
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+/* XMP Context: Smallest heading (h6) */
+.headings.block h6 {
+  /* XMP Metadata: Body text size */
+  font-size: 1rem; /* 16px */
+  
+  /* XMP: Line height */
+  line-height: 1.5;
+  
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary);
+  
+  /* XMP: Semi-bold (needs weight for distinction from body) */
+  font-weight: 600;
+  
+  /* XMP: Uppercase for visual distinction at small size */
+  text-transform: uppercase;
+  
+  /* XMP: Letter spacing */
+  letter-spacing: 0.05em;
+  
+  /* XMP: Spacing */
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+/* XMP Context: Subheading text (below main heading) */
+.subheading {
+  /* XMP: Larger than body, smaller than h3 */
+  font-size: 1.25rem; /* 20px */
+  
+  /* XMP: Relaxed line height for readability */
+  line-height: 1.6;
+  
+  /* XMP Theme: Secondary text color (muted) */
+  color: var(--text-secondary); /* NOT #666 */
+  
+  /* XMP: Regular weight (contrast with bold heading) */
+  font-weight: 400;
+  
+  /* XMP: Space below */
+  margin-bottom: 1.5rem;
+  
+  /* XMP: Remove top margin */
+  margin-top: 0;
+}
+
+/* XMP Context: Accent underline (optional decorative element) */
+.headings.block h1.underlined::after,
+.headings.block h2.underlined::after {
+  /* XMP: Create underline using pseudo-element */
+  content: '';
+  display: block;
+  
+  /* XMP: Short accent line (centered) */
+  width: 4rem; /* 64px */
+  height: 4px;
+  
+  /* XMP Theme: Accent color for underline */
+  background-color: var(--color-accent); /* NOT #0066cc */
+  
+  /* XMP: Center the line */
+  margin: 1rem auto 0;
+  
+  /* XMP: Rounded ends */
+  border-radius: 2px;
+}
+
+/* EDS Responsive Breakpoints - DO NOT MODIFY structure */
+/* XMP Context: Tablet styles (600-899px) */
+@media (min-width: 600px) {
+  /* XMP: Increase block padding on tablet */
+  .headings.block {
+    padding: 3rem 2rem;
+  }
+  
+  /* XMP Metadata: Larger h1 on tablet */
+  .headings.block h1 {
+    font-size: 3rem; /* 48px */
+  }
+  
+  /* XMP Metadata: Larger h2 on tablet */
+  .headings.block h2 {
+    font-size: 2.25rem; /* 36px */
+  }
+  
+  /* XMP Metadata: Slightly larger h3 on tablet */
+  .headings.block h3 {
+    font-size: 1.75rem; /* 28px */
+  }
+  
+  /* XMP: Larger subheading on tablet */
+  .subheading {
+    font-size: 1.375rem; /* 22px */
+  }
+}
+
+/* XMP Context: Desktop styles (900px+) */
+@media (min-width: 900px) {
+  /* XMP: Maximum block padding on desktop */
+  .headings.block {
+    padding: 4rem 2rem;
+  }
+  
+  /* XMP Metadata: Largest h1 on desktop */
+  .headings.block h1 {
+    font-size: 4rem; /* 64px */
+  }
+  
+  /* XMP Metadata: Larger h2 on desktop */
+  .headings.block h2 {
+    font-size: 3rem; /* 48px */
+  }
+  
+  /* XMP Metadata: Larger h3 on desktop */
+  .headings.block h3 {
+    font-size: 2rem; /* 32px */
+  }
+  
+  /* XMP Metadata: Larger h4 on desktop */
+  .headings.block h4 {
+    font-size: 1.5rem; /* 24px */
+  }
+  
+  /* XMP: Larger subheading on desktop */
+  .subheading {
+    font-size: 1.5rem; /* 24px */
+  }
+}
+
+/* 
+ * THEME-SPECIFIC OVERRIDES (applied via section metadata)
+ * XMP Context: These styles are applied when theme is specified
+ */
+
+/* XMP Theme: Light variant (ensures dark text on light bg) */
+.headings.light {
+  /* Light background */
+  background-color: var(--bg-light); /* NOT #f9f9f9 */
+}
+
+.headings.light h1,
+.headings.light h2,
+.headings.light h3,
+.headings.light h4,
+.headings.light h5,
+.headings.light h6 {
+  /* Ensure dark text on light background */
+  color: var(--text-primary); /* NOT #000 */
+}
+
+/* XMP Theme: Highlight variant (accent color emphasis) */
+.headings.highlight h1,
+.headings.highlight h2 {
+  /* Accent color for emphasis */
+  color: var(--color-accent); /* NOT #0066cc */
+}
+
+.headings.highlight {
+  /* Optional: Light background for contrast */
+  background-color: var(--bg-highlight); /* NOT #f0f8ff */
+}
+
+/* 
+ * ALIGNMENT VARIATIONS
+ * XMP Context: Text alignment options
+ */
+
+/* XMP Variant: Left-aligned headings */
+.headings.block.left-aligned {
+  text-align: left;
+}
+
+.headings.block.left-aligned .underlined::after {
+  /* Left-align the underline accent */
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* XMP Variant: Right-aligned headings */
+.headings.block.right-aligned {
+  text-align: right;
+}
+
+.headings.block.right-aligned .underlined::after {
+  /* Right-align the underline accent */
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* XMP Variant: Center-aligned (default, but explicit) */
+.headings.block.center-aligned {
+  text-align: center;
+}
+
+/*
+ * ACCESSIBILITY ENHANCEMENTS
+ * XMP Context: Focus states and screen reader support
+ */
+
+/* XMP Accessibility: Focus on headings with links */
+.headings.block h1 a:focus,
+.headings.block h2 a:focus,
+.headings.block h3 a:focus {
+  /* Clear focus indicator */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 4px;
+}
+
+/* XMP Accessibility: Visited link color (don't change for headings) */
+.headings.block h1 a:visited,
+.headings.block h2 a:visited,
+.headings.block h3 a:visited {
+  /* Maintain same color for visited heading links */
+  color: inherit;
+}
+
+/*
+ * XMP METADATA SUMMARY FOR AI AGENTS:
+ * 
+ * This CSS file defines the headings block styling with:
+ * - Semantic heading hierarchy (h1 largest → h6 smallest)
+ * - Mobile-first responsive typography (smaller mobile → larger desktop)
+ * - Optional eyebrow and subheading elements
+ * - Theme support (None, Light, Highlight)
+ * - Alignment variants (left, center, right)
+ * - Optional decorative underline accent
+ * - CSS custom properties for all colors
+ * 
+ * TYPOGRAPHY SCALE (Mobile → Desktop):
+ * - h1: 40px → 48px → 64px (2.5rem → 3rem → 4rem)
+ * - h2: 32px → 36px → 48px (2rem → 2.25rem → 3rem)
+ * - h3: 24px → 28px → 32px (1.5rem → 1.75rem → 2rem)
+ * - h4: 20px → 20px → 24px (1.25rem → 1.25rem → 1.5rem)
+ * - h5: 18px (1.125rem) - consistent
+ * - h6: 16px (1rem) - consistent
+ * 
+ * If the Figma frame differs from this reference block:
+ * - Check heading sizes (compare to scale above)
+ * - Check line heights (typically 1.1-1.3 for headings)
+ * - Check font weights (h1/h2 typically 700, h3+ typically 600)
+ * - Check alignment (left, center, right)
+ * - Check if eyebrow text is present (small label above heading)
+ * - Check if subheading is present (text below main heading)
+ * - Check if decorative elements are present (underlines, dividers)
+ * - Check spacing between headings and other content
+ * 
+ * Common gaps to look for:
+ * - Figma uses different heading size → Adjust font-size values
+ * - Figma uses different font weights → Update font-weight properties
+ * - Figma uses different line heights → Adjust line-height values
+ * - Figma shows left-aligned headings → Add .left-aligned class
+ * - Figma has eyebrow text → Ensure .eyebrow element is present
+ * - Figma has decorative underline → Add .underlined class
+ * - Figma uses hex colors → Must convert to var() custom properties
+ * - Figma uses pixel values → Must convert to rem (divide by 16)
+ * 
+ * Heading hierarchy rules (WCAG):
+ * - Only ONE h1 per page (page title)
+ * - Don't skip levels (h1 → h2 → h3, NOT h1 → h3)
+ * - Headings should describe content structure
+ * - Use CSS for visual size, HTML for semantic hierarchy
+ * 
+ * Example: A visually small heading can still be h2 if it's a section header
+ * Example: A visually large text might be a <p> if it's not a heading
+ */
