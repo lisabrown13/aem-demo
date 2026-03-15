@@ -1,0 +1,446 @@
+/**
+ * EDS Block: Icons
+ * 
+ * XMP METADATA CONTEXT:
+ * - Block Type: icons (eds:blockType=icons)
+ * - Supports Themes: None, Light, Dark
+ * - Breakpoints: 600px, 900px, 1200px (mobile-first)
+ * - Typical Keywords: icons, symbols, graphics, features, services, benefits
+ * - Description: Icon block for displaying icon-based content (features, services, benefits)
+ * - Complexity: Low to Medium
+ * 
+ * EXPECTED STRUCTURE:
+ * - Main wrapper: .icons.block with data-block-name="icons"
+ * - Icons container: .icons-wrapper (flexbox or grid)
+ * - Individual icon items: .icon-item (repeating elements)
+ * - Icon components:
+ *   - .icon (SVG or icon font container)
+ *   - .icon-title (heading, typically h3)
+ *   - .icon-description (body text, optional)
+ * 
+ * ICON IMPLEMENTATION METHODS (from XMP metadata):
+ * 1. Inline SVG (recommended for EDS)
+ * 2. SVG sprites with <use> references
+ * 3. Icon fonts (Font Awesome, Material Icons)
+ * 4. Image files (.svg, .png)
+ * 
+ * LAYOUT PATTERNS (from XMP metadata):
+ * - Horizontal row (2-4 icons)
+ * - Grid (6-12 icons, 2-3 columns)
+ * - Vertical stack (mobile-first default)
+ * 
+ * THEME VARIATIONS (from XMP metadata):
+ * - None: Default colors (icons use brand colors)
+ * - Light: Light background, dark icons
+ * - Dark: Dark background, light icons
+ * 
+ * COLOR VARIABLES (must use these, not hex codes):
+ * - Icon colors: var(--icon-primary), var(--icon-accent), var(--icon-neutral)
+ * - Text: var(--text-primary), var(--text-secondary)
+ * - Backgrounds: var(--bg-light), var(--bg-dark)
+ */
+
+/* Base styles - Mobile first (0-599px) */
+/* XMP Context: Single column stack on mobile */
+.icons.block {
+  /* EDS Pattern: Standard block padding */
+  padding: 3rem 1rem;
+  
+  /* XMP: Default background */
+  background-color: transparent;
+}
+
+/* XMP Context: Container for icon items */
+.icons-wrapper {
+  /* Layout: Flexbox for responsive icon layout */
+  display: flex;
+  
+  /* XMP Metadata: Mobile = vertical stack (column) */
+  flex-direction: column;
+  
+  /* XMP: Gap between icon items */
+  gap: 2rem; /* 32px */
+  
+  /* XMP: Constrain max width */
+  max-width: 75rem; /* 1200px */
+  margin: 0 auto;
+  
+  /* XMP: Center align items */
+  align-items: center;
+}
+
+/* XMP Context: Individual icon item */
+.icon-item {
+  /* Layout: Flexbox for icon + text alignment */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  /* XMP: Center text alignment by default */
+  text-align: center;
+  
+  /* XMP: Constrain item width for readability */
+  max-width: 20rem; /* 320px per item */
+  
+  /* XMP: Full width on mobile */
+  width: 100%;
+}
+
+/* XMP Context: Icon container (SVG wrapper) */
+.icon {
+  /* XMP Metadata: Icon size (typically 48-64px) */
+  width: 4rem; /* 64px */
+  height: 4rem; /* 64px */
+  
+  /* XMP: Ensure consistent size */
+  flex-shrink: 0;
+  
+  /* XMP: Space below icon before text */
+  margin-bottom: 1rem;
+  
+  /* Layout: Flexbox for centering SVG content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* XMP Theme: Primary icon color */
+  color: var(--icon-primary); /* NOT #0066cc */
+}
+
+/* XMP Context: SVG within icon container */
+.icon svg {
+  /* XMP: Fill container */
+  width: 100%;
+  height: 100%;
+  
+  /* XMP Theme: Inherit color from parent */
+  fill: currentColor;
+  
+  /* XMP Performance: Smooth color transitions */
+  transition: fill 0.3s ease;
+}
+
+/* XMP Context: Icon title (typically h3) */
+.icon-title {
+  /* XMP Metadata: Icon titles are typically h3 (20-24px) */
+  font-size: 1.25rem; /* 20px */
+  
+  /* XMP: Tight line height */
+  line-height: 1.3;
+  
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary); /* NOT #000 */
+  
+  /* XMP: Semi-bold for prominence */
+  font-weight: 600;
+  
+  /* XMP: Space below title */
+  margin: 0 0 0.5rem 0;
+}
+
+/* XMP Context: Icon description text (optional) */
+.icon-description {
+  /* XMP: Body text size */
+  font-size: 1rem; /* 16px */
+  
+  /* XMP: Relaxed line height for readability */
+  line-height: 1.6;
+  
+  /* XMP Theme: Secondary text (slightly muted) */
+  color: var(--text-secondary); /* NOT #666 */
+  
+  /* XMP: Remove default margins */
+  margin: 0;
+}
+
+/* XMP Context: Hover effect on icon items */
+.icon-item:hover .icon {
+  /* XMP: Subtle scale on hover */
+  transform: scale(1.1);
+  
+  /* XMP: Smooth transition */
+  transition: transform 0.3s ease;
+}
+
+.icon-item:hover .icon svg {
+  /* XMP Theme: Accent color on hover */
+  fill: var(--icon-accent); /* NOT #0052a3 */
+}
+
+/* XMP Context: Icon item with link (clickable) */
+.icon-item a {
+  /* XMP: Remove default link styling */
+  text-decoration: none;
+  color: inherit;
+  
+  /* XMP: Make entire item clickable */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* EDS Responsive Breakpoints - DO NOT MODIFY structure */
+/* XMP Context: Tablet styles (600-899px) */
+@media (min-width: 600px) {
+  /* XMP Metadata: 2 columns on tablet */
+  .icons-wrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* XMP: Each item takes ~50% width (2 columns) */
+  .icon-item {
+    width: calc(50% - 1rem); /* Account for gap */
+    max-width: 20rem;
+  }
+  
+  /* XMP: Slightly larger padding on tablet */
+  .icons.block {
+    padding: 4rem 2rem;
+  }
+}
+
+/* XMP Context: Desktop styles (900px+) */
+@media (min-width: 900px) {
+  /* XMP Metadata: 3-4 columns on desktop */
+  .icon-item {
+    width: calc(33.333% - 1.5rem); /* 3 columns */
+    max-width: 20rem;
+  }
+  
+  /* XMP: Maximum padding for desktop */
+  .icons.block {
+    padding: 5rem 2rem;
+  }
+  
+  /* XMP: Larger icons on desktop */
+  .icon {
+    width: 5rem; /* 80px */
+    height: 5rem;
+  }
+  
+  /* XMP: Larger title on desktop */
+  .icon-title {
+    font-size: 1.5rem; /* 24px */
+  }
+}
+
+/* XMP Context: Large desktop (4 columns) */
+@media (min-width: 1200px) {
+  /* XMP Variant: 4 columns for many icons */
+  .icons-wrapper.icons-4col .icon-item {
+    width: calc(25% - 1.5rem); /* 4 columns */
+  }
+}
+
+/* 
+ * THEME-SPECIFIC OVERRIDES (applied via section metadata)
+ * XMP Context: These styles are applied when theme is specified
+ */
+
+/* XMP Theme: Light variant */
+.icons.light {
+  /* Light background */
+  background-color: var(--bg-light); /* NOT #f9f9f9 */
+}
+
+.icons.light .icon {
+  /* Darker icons on light background */
+  color: var(--icon-primary);
+}
+
+.icons.light .icon-title {
+  /* Dark text */
+  color: var(--text-primary);
+}
+
+/* XMP Theme: Dark variant */
+.icons.dark {
+  /* Dark background */
+  background-color: var(--bg-dark); /* NOT #1a1a1a */
+}
+
+.icons.dark .icon {
+  /* Light icons on dark background */
+  color: var(--icon-neutral); /* NOT #fff */
+}
+
+.icons.dark .icon-title {
+  /* Light text */
+  color: var(--text-inverse);
+}
+
+.icons.dark .icon-description {
+  /* Muted light text */
+  color: var(--text-secondary-inverse);
+}
+
+/* 
+ * VARIANT: Horizontal Icon Layout
+ * XMP Context: Icons on left, text on right (horizontal cards)
+ */
+.icons-wrapper.horizontal .icon-item {
+  /* XMP Variant: Horizontal layout */
+  flex-direction: row;
+  text-align: left;
+  align-items: flex-start;
+  max-width: 40rem; /* Wider for horizontal */
+}
+
+.icons-wrapper.horizontal .icon {
+  /* XMP Variant: Icon stays on left */
+  margin-right: 1.5rem;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+/* XMP Context: Mobile override for horizontal variant */
+@media (max-width: 599px) {
+  .icons-wrapper.horizontal .icon-item {
+    /* XMP: Stack vertically on mobile even in horizontal variant */
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .icons-wrapper.horizontal .icon {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+/* 
+ * VARIANT: Large Icons (Hero-style)
+ * XMP Context: Bigger icons for emphasis
+ */
+.icons-wrapper.large .icon {
+  /* XMP Variant: Extra large icons */
+  width: 6rem; /* 96px */
+  height: 6rem;
+}
+
+@media (min-width: 900px) {
+  .icons-wrapper.large .icon {
+    width: 8rem; /* 128px */
+    height: 8rem;
+  }
+}
+
+/* 
+ * VARIANT: Circular Icon Backgrounds
+ * XMP Context: Icons with colored circle backgrounds
+ */
+.icon-item.circled .icon {
+  /* XMP Variant: Add circular background */
+  background-color: var(--bg-icon-circle); /* NOT #e6f0ff */
+  border-radius: 50%;
+  
+  /* XMP: Add padding inside circle */
+  padding: 1rem;
+  
+  /* XMP: Adjust size to account for padding */
+  width: 5rem;
+  height: 5rem;
+}
+
+.icon-item.circled .icon svg {
+  /* XMP: SVG fills the padded circle */
+  width: 3rem;
+  height: 3rem;
+}
+
+/*
+ * ACCESSIBILITY ENHANCEMENTS
+ * XMP Context: Focus states for keyboard navigation
+ */
+
+/* XMP Accessibility: Focus on clickable icon items */
+.icon-item a:focus {
+  /* Clear focus outline */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 4px;
+  border-radius: 0.5rem;
+}
+
+/* XMP Accessibility: Ensure icons are not focusable (decorative) */
+.icon svg {
+  /* Icons are decorative, not interactive */
+  pointer-events: none;
+}
+
+/*
+ * ICON FONT ALTERNATIVE
+ * XMP Context: If using icon fonts instead of SVG
+ */
+
+/* XMP: Font Awesome example (if used) */
+.icon i {
+  /* Font size matches icon size */
+  font-size: 4rem;
+  
+  /* Inherit color from .icon container */
+  color: currentColor;
+}
+
+/* XMP: Material Icons example (if used) */
+.icon .material-icons {
+  font-size: 4rem;
+  color: currentColor;
+}
+
+/*
+ * XMP METADATA SUMMARY FOR AI AGENTS:
+ * 
+ * This CSS file defines the icons block styling with:
+ * - Flexbox responsive layout (1 col mobile → 2 col tablet → 3-4 col desktop)
+ * - SVG icons (recommended) with currentColor for easy theming
+ * - Icon + title + description structure
+ * - Theme support (None, Light, Dark)
+ * - Layout variants (Horizontal, Large, Circled)
+ * - Mobile-first approach with defined breakpoints
+ * - CSS custom properties for all colors
+ * 
+ * ICON SIZE SCALE:
+ * - Mobile: 4rem (64px) default
+ * - Desktop: 5rem (80px) default
+ * - Large variant: 6-8rem (96-128px)
+ * 
+ * LAYOUT PATTERNS:
+ * - Vertical stack (mobile default)
+ * - 2 columns (tablet, 600px+)
+ * - 3 columns (desktop, 900px+)
+ * - 4 columns (large desktop, 1200px+ or .icons-4col)
+ * 
+ * If the Figma frame differs from this reference block:
+ * - Check number of columns at each breakpoint
+ * - Check icon size (64px, 80px, 96px, 128px)
+ * - Check layout orientation (vertical vs horizontal)
+ * - Check if icons have background circles/squares
+ * - Check icon spacing (gap between items)
+ * - Check text alignment (center vs left)
+ * - Check if icons are clickable (links)
+ * 
+ * Common gaps to look for:
+ * - Figma shows 4 columns desktop → Add .icons-4col class
+ * - Figma shows horizontal layout → Apply .horizontal variant
+ * - Figma shows larger icons → Apply .large variant or adjust icon size
+ * - Figma shows circular backgrounds → Apply .circled class
+ * - Figma shows different icon colors → Update var(--icon-primary)
+ * - Figma uses hex colors → Must convert to var() custom properties
+ * - Figma shows left-aligned text → Remove center alignment
+ * 
+ * SVG best practices:
+ * - Use inline SVG for best control and performance
+ * - Use currentColor for fill/stroke (inherits from parent)
+ * - Optimize SVGs (remove unnecessary attributes, compress)
+ * - Use viewBox for scalability (not fixed width/height)
+ * - Ensure SVGs have accessible titles: <title>Icon description</title>
+ * 
+ * Icon implementation options:
+ * 1. Inline SVG (best): Full control, themeable, accessible
+ * 2. SVG sprite + <use>: Good for many icons, cacheable
+ * 3. Icon fonts: Easy to implement, but accessibility concerns
+ * 4. Image files: Simplest, but less flexible for theming
+ */
