@@ -1,0 +1,521 @@
+/**
+ * EDS Block: Breadcrumbs
+ * 
+ * XMP METADATA CONTEXT:
+ * - Block Type: breadcrumbs (eds:blockType=breadcrumbs)
+ * - Supports Themes: None, Light, Dark
+ * - Breakpoints: 600px, 900px, 1200px (mobile-first)
+ * - Typical Keywords: breadcrumbs, navigation, path, hierarchy, wayfinding, trail
+ * - Description: Breadcrumbs block for showing page hierarchy and navigation path
+ * - Complexity: Low
+ * 
+ * EXPECTED STRUCTURE:
+ * - Main wrapper: .breadcrumbs.block with data-block-name="breadcrumbs"
+ * - Nav element: <nav aria-label="Breadcrumb"> (semantic navigation)
+ * - Ordered list: <ol class="breadcrumb-list"> (ordered = hierarchy matters)
+ * - List items: <li class="breadcrumb-item"> (repeating)
+ * - Links: <a class="breadcrumb-link"> (all except last item)
+ * - Current page: <span class="breadcrumb-current"> (last item, not a link)
+ * - Separators: CSS-generated (::after pseudo-elements, NOT in HTML)
+ * 
+ * SEPARATOR STYLES (from XMP metadata):
+ * - Slash: /  (default, most common)
+ * - Chevron: >  or › 
+ * - Arrow: →
+ * - Dot: •
+ * - Custom SVG: Icon-based separator
+ * 
+ * BREADCRUMB VARIANTS (from XMP metadata):
+ * - Default: Inline text links with separators
+ * - Pill: Each item in rounded pill background
+ * - Underline: Active underline on hover
+ * - Compact: Smaller text, tighter spacing
+ * - Truncated: Long paths truncated with ellipsis
+ * 
+ * THEME VARIATIONS (from XMP metadata):
+ * - None: Default breadcrumb colors
+ * - Light: Light background
+ * - Dark: Dark background, light text
+ * 
+ * COLOR VARIABLES (must use these, not hex codes):
+ * - Links: var(--color-cta-primary), var(--color-cta-hover)
+ * - Current: var(--text-primary), var(--text-secondary)
+ * - Separator: var(--text-breadcrumb-separator)
+ * - Background (pill): var(--bg-breadcrumb-pill)
+ * - Border (pill): var(--border-breadcrumb-pill)
+ */
+
+/* Base styles - Mobile first (0-599px) */
+/* XMP Context: Default breadcrumbs block wrapper */
+.breadcrumbs.block {
+  /* EDS Pattern: Minimal padding (breadcrumbs are compact navigation) */
+  padding: 0.75rem 1rem;
+  
+  /* XMP: Default background */
+  background-color: transparent;
+}
+
+/* XMP Context: Semantic nav element */
+.breadcrumbs.block nav {
+  /* XMP: No extra styling on nav (semantic container only) */
+  display: block;
+}
+
+/* XMP Context: Ordered list (ol - order matters for hierarchy) */
+.breadcrumb-list {
+  /* XMP: Remove default list styles */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  /* XMP: Horizontal layout */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  
+  /* XMP: Gap between items (including separator space) */
+  gap: 0; /* Separators handle spacing via padding */
+}
+
+/* XMP Context: Individual breadcrumb item */
+.breadcrumb-item {
+  /* XMP: Display inline-flex for separator alignment */
+  display: inline-flex;
+  align-items: center;
+}
+
+/* XMP Context: Separator between items (CSS-generated, NOT in HTML) */
+.breadcrumb-item:not(:last-child)::after {
+  /* XMP: Default separator: forward slash */
+  content: '/';
+  
+  /* XMP: Spacing around separator */
+  padding: 0 0.5rem; /* 8px each side */
+  
+  /* XMP Theme: Separator color (muted, not same as link) */
+  color: var(--text-breadcrumb-separator); /* NOT #999 */
+  
+  /* XMP: Prevent separator from being interactive */
+  pointer-events: none;
+  
+  /* XMP Accessibility: Hide separator from screen readers */
+  aria-hidden: true; /* Note: use aria-hidden in HTML for proper support */
+  
+  /* XMP: Consistent size */
+  font-size: inherit;
+  
+  /* XMP: No underline */
+  text-decoration: none;
+}
+
+/* XMP Context: Breadcrumb link (all items except last) */
+.breadcrumb-link {
+  /* XMP: Font size */
+  font-size: 0.875rem; /* 14px */
+  
+  /* XMP: Line height */
+  line-height: 1.5;
+  
+  /* XMP Theme: Link color */
+  color: var(--color-cta-primary); /* NOT #0066cc */
+  
+  /* XMP: Underline for link affordance */
+  text-decoration: none; /* Remove default underline */
+  
+  /* XMP: Smooth transition */
+  transition: color 0.2s ease;
+  
+  /* XMP: Prevent wrapping mid-word */
+  white-space: nowrap;
+}
+
+/* XMP Context: Link hover state */
+.breadcrumb-link:hover {
+  /* XMP Theme: Darker on hover */
+  color: var(--color-cta-hover); /* NOT #0052a3 */
+  
+  /* XMP: Add underline on hover (shows interactivity) */
+  text-decoration: underline;
+}
+
+/* XMP Context: Link focus state (keyboard) */
+.breadcrumb-link:focus {
+  /* XMP Accessibility: Clear focus outline */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+/* XMP Context: Link visited state */
+.breadcrumb-link:visited {
+  /* XMP: Slightly different for visited (optional for breadcrumbs) */
+  color: var(--color-cta-primary); /* Often same as default for nav */
+}
+
+/* XMP Context: Current page (last item - not a link) */
+.breadcrumb-current {
+  /* XMP: Same font size as links */
+  font-size: 0.875rem; /* 14px */
+  
+  /* XMP: Line height */
+  line-height: 1.5;
+  
+  /* XMP Theme: Slightly muted (it's the current page, not clickable) */
+  color: var(--text-secondary); /* NOT #666 */
+  
+  /* XMP: Normal weight (not bold) */
+  font-weight: 400;
+  
+  /* XMP: Prevent wrapping */
+  white-space: nowrap;
+  
+  /* XMP: Maximum width before truncation (optional) */
+  /* max-width: 12rem; */
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+}
+
+/* 
+ * SEPARATOR VARIANTS
+ * XMP Context: Different separator styles
+ */
+
+/* XMP Variant: Chevron separator (>) */
+.breadcrumbs.block.separator-chevron .breadcrumb-item:not(:last-child)::after {
+  content: '›'; /* Single right angle quotation */
+  font-size: 1.125rem; /* Slightly larger for visibility */
+  line-height: 1;
+  padding: 0 0.375rem;
+}
+
+/* XMP Variant: Arrow separator (→) */
+.breadcrumbs.block.separator-arrow .breadcrumb-item:not(:last-child)::after {
+  content: '→';
+  padding: 0 0.5rem;
+}
+
+/* XMP Variant: Dot separator (•) */
+.breadcrumbs.block.separator-dot .breadcrumb-item:not(:last-child)::after {
+  content: '•';
+  padding: 0 0.5rem;
+  font-size: 0.625rem; /* Smaller dot */
+  vertical-align: middle;
+}
+
+/* XMP Variant: Pipe separator (|) */
+.breadcrumbs.block.separator-pipe .breadcrumb-item:not(:last-child)::after {
+  content: '|';
+  padding: 0 0.625rem;
+  opacity: 0.4;
+}
+
+/* XMP Variant: No separator (space only) */
+.breadcrumbs.block.separator-none .breadcrumb-item:not(:last-child)::after {
+  content: '';
+  padding: 0 0.25rem;
+}
+
+/* 
+ * VARIANT: Pill Breadcrumbs
+ * XMP Context: Each item has a pill/tag background
+ */
+.breadcrumbs.block.pill .breadcrumb-item {
+  /* XMP: Reset to block for pill styling */
+  display: flex;
+}
+
+/* XMP: Remove default separator (pill has its own visual separation) */
+.breadcrumbs.block.pill .breadcrumb-item:not(:last-child)::after {
+  /* XMP: No separator for pill style */
+  content: '';
+  padding: 0 0.25rem;
+}
+
+/* XMP Context: Pill styling for both links and current */
+.breadcrumbs.block.pill .breadcrumb-link,
+.breadcrumbs.block.pill .breadcrumb-current {
+  /* XMP Theme: Pill background */
+  background-color: var(--bg-breadcrumb-pill); /* NOT #f0f0f0 */
+  
+  /* XMP Theme: Pill border */
+  border: 1px solid var(--border-breadcrumb-pill); /* NOT #e0e0e0 */
+  
+  /* XMP: Pill shape */
+  border-radius: 1rem; /* Fully rounded */
+  
+  /* XMP: Padding for pill */
+  padding: 0.25rem 0.75rem; /* 4px vertical, 12px horizontal */
+  
+  /* XMP: No underline in pill */
+  text-decoration: none;
+}
+
+/* XMP Context: Active pill (current page) */
+.breadcrumbs.block.pill .breadcrumb-current {
+  /* XMP Theme: Different background for current */
+  background-color: var(--bg-breadcrumb-pill-active); /* NOT #e0e0e0 */
+  
+  /* XMP: Slightly stronger text */
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* XMP Context: Pill hover state */
+.breadcrumbs.block.pill .breadcrumb-link:hover {
+  /* XMP: Slightly darker background on hover */
+  background-color: var(--bg-breadcrumb-pill-hover);
+  text-decoration: none; /* No underline for pills */
+}
+
+/* 
+ * VARIANT: Compact Breadcrumbs
+ * XMP Context: Smaller text and tighter spacing
+ */
+.breadcrumbs.block.compact .breadcrumb-link,
+.breadcrumbs.block.compact .breadcrumb-current {
+  /* XMP: Smaller font */
+  font-size: 0.75rem; /* 12px */
+}
+
+.breadcrumbs.block.compact .breadcrumb-item:not(:last-child)::after {
+  /* XMP: Tighter separator */
+  padding: 0 0.25rem;
+}
+
+/* 
+ * VARIANT: Large Breadcrumbs
+ * XMP Context: Larger text for prominent wayfinding
+ */
+.breadcrumbs.block.large .breadcrumb-link,
+.breadcrumbs.block.large .breadcrumb-current {
+  /* XMP: Larger font */
+  font-size: 1rem; /* 16px */
+}
+
+/* 
+ * VARIANT: Bold Current Page
+ * XMP Context: Current page item is bold
+ */
+.breadcrumbs.block.bold-current .breadcrumb-current {
+  /* XMP: Bold weight for current page */
+  font-weight: 700;
+  
+  /* XMP: Primary text color (not muted) */
+  color: var(--text-primary);
+}
+
+/* 
+ * VARIANT: Truncated (long paths)
+ * XMP Context: Middle items collapsed to ellipsis
+ */
+.breadcrumbs.block.truncated .breadcrumb-item.hidden {
+  /* XMP: Hide middle items when path is long */
+  display: none;
+}
+
+.breadcrumbs.block.truncated .breadcrumb-ellipsis {
+  /* XMP: Show ellipsis item */
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumbs.block.truncated .breadcrumb-ellipsis button {
+  /* XMP: Ellipsis expand button */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  padding: 0 0.25rem;
+  
+  /* XMP: Hover state */
+  transition: color 0.2s ease;
+}
+
+.breadcrumbs.block.truncated .breadcrumb-ellipsis button:hover {
+  color: var(--text-primary);
+}
+
+/* 
+ * STRUCTURED DATA / SCHEMA
+ * XMP Context: Breadcrumbs support rich results in Google
+ * Schema is added in HTML as JSON-LD script, not CSS
+ */
+
+/* EDS Responsive Breakpoints - DO NOT MODIFY structure */
+/* XMP Context: Tablet styles (600-899px) */
+@media (min-width: 600px) {
+  .breadcrumbs.block {
+    /* XMP: Slightly more padding on tablet */
+    padding: 1rem 2rem;
+  }
+  
+  /* XMP: Slightly larger text on tablet */
+  .breadcrumb-link,
+  .breadcrumb-current {
+    font-size: 0.9375rem; /* 15px */
+  }
+}
+
+/* XMP Context: Desktop styles (900px+) */
+@media (min-width: 900px) {
+  .breadcrumbs.block {
+    /* XMP: More padding on desktop */
+    padding: 1.25rem 2rem;
+  }
+  
+  /* XMP: Standard body text size on desktop */
+  .breadcrumb-link,
+  .breadcrumb-current {
+    font-size: 1rem; /* 16px */
+  }
+}
+
+/* 
+ * THEME-SPECIFIC OVERRIDES
+ * XMP Context: These styles are applied when theme is specified
+ */
+
+/* XMP Theme: Light variant */
+.breadcrumbs.light {
+  background-color: var(--bg-light); /* NOT #f9f9f9 */
+  
+  /* XMP: Optional bottom border */
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* XMP Theme: Dark variant */
+.breadcrumbs.dark {
+  background-color: var(--bg-dark); /* NOT #1a1a1a */
+}
+
+.breadcrumbs.dark .breadcrumb-link {
+  /* XMP: Lighter link color on dark background */
+  color: var(--color-cta-primary-inverse);
+}
+
+.breadcrumbs.dark .breadcrumb-link:hover {
+  color: var(--color-cta-hover-inverse);
+}
+
+.breadcrumbs.dark .breadcrumb-current {
+  /* XMP: Light text on dark background */
+  color: var(--text-secondary-inverse);
+}
+
+.breadcrumbs.dark .breadcrumb-item:not(:last-child)::after {
+  /* XMP: Light separator on dark background */
+  color: var(--text-breadcrumb-separator-dark);
+}
+
+/*
+ * ACCESSIBILITY ENHANCEMENTS
+ * XMP Context: Breadcrumbs have specific WCAG requirements
+ */
+
+/* XMP Accessibility: Focus visible */
+.breadcrumb-link:focus-visible {
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+/* XMP Accessibility: Current page must be identifiable */
+/* Handled by aria-current="page" in HTML */
+
+/* XMP Accessibility: Ensure minimum touch target */
+.breadcrumb-link {
+  /* XMP: Minimum 44px touch target (achieved with padding) */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/*
+ * PRINT STYLES
+ * XMP Context: Breadcrumbs useful in print for context
+ */
+@media print {
+  .breadcrumbs.block {
+    /* XMP: Show breadcrumbs when printing (navigation context) */
+    display: block;
+  }
+  
+  /* XMP: Show separators clearly */
+  .breadcrumb-item:not(:last-child)::after {
+    color: #666;
+  }
+}
+
+/*
+ * XMP METADATA SUMMARY FOR AI AGENTS:
+ * 
+ * This CSS file defines the breadcrumbs block styling with:
+ * - Semantic <nav> + <ol> structure (order matters for hierarchy)
+ * - CSS-generated separators (NOT in HTML - cleaner markup)
+ * - Multiple separator variants (slash, chevron, arrow, dot, pipe)
+ * - Pill variant (each item has background/border)
+ * - Size variants (compact, default, large)
+ * - Bold current page variant
+ * - Truncation for long paths
+ * - Theme support (None, Light, Dark)
+ * - Mobile-first responsive approach
+ * - CSS custom properties for all colors
+ * - Full accessibility (focus states, contrast, touch targets)
+ * - Print styles
+ * 
+ * BREADCRUMB SIZES:
+ * - Compact: 12px (0.75rem)
+ * - Default: 14px mobile → 15px tablet → 16px desktop
+ * - Large: 16px (1rem)
+ * 
+ * SEPARATOR OPTIONS:
+ * - / (slash): Default, most common
+ * - › (chevron): Modern, directional
+ * - → (arrow): Directional, prominent
+ * - • (dot): Subtle, non-directional
+ * - | (pipe): Classic, formal
+ * - None: Space only
+ * 
+ * CRITICAL MARKUP RULES:
+ * - ALWAYS use <ol> not <ul> (order is significant)
+ * - ALWAYS use <nav aria-label="Breadcrumb"> wrapper
+ * - ALWAYS add aria-current="page" to last item
+ * - NEVER put separators in HTML (use CSS ::after)
+ * - NEVER make current page a link
+ * 
+ * If the Figma frame differs from this reference block:
+ * - Check separator style (/, ›, →, •, |, none)
+ * - Check if pill style (background on each item)
+ * - Check text size (compact 12px, default 14-16px, large 16px+)
+ * - Check if current page is bold
+ * - Check if path is truncated (ellipsis for long paths)
+ * - Check spacing between items
+ * - Check link color vs current page color
+ * 
+ * Common gaps to look for:
+ * - Figma shows chevron separator → Apply .separator-chevron class
+ * - Figma shows arrow separator → Apply .separator-arrow class
+ * - Figma shows dot separator → Apply .separator-dot class
+ * - Figma shows pill items → Apply .pill class
+ * - Figma shows compact breadcrumbs → Apply .compact class
+ * - Figma shows bold current page → Apply .bold-current class
+ * - Figma shows truncated path → Apply .truncated class (JS needed)
+ * - Figma uses hex colors → Must convert to var() custom properties
+ * 
+ * Accessibility requirements (WCAG):
+ * - Breadcrumbs must be in <nav> element
+ * - <nav> must have aria-label="Breadcrumb"
+ * - Use <ol> (ordered list - hierarchy matters)
+ * - Current page must have aria-current="page"
+ * - Current page must NOT be a link
+ * - Separators must be aria-hidden="true" (or CSS only)
+ * - Links must have 4.5:1 contrast ratio
+ * - Minimum 44px touch targets
+ * - Focus indicators visible on all links
+ * 
+ * SEO considerations:
+ * - Add JSON-LD structured data (BreadcrumbList schema)
+ * - Helps Google show rich results with breadcrumbs
+ * - Should mirror the visual breadcrumb exactly
+ */
