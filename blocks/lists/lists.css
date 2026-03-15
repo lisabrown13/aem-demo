@@ -1,0 +1,493 @@
+/**
+ * EDS Block: Lists
+ * 
+ * XMP METADATA CONTEXT:
+ * - Block Type: lists (eds:blockType=lists)
+ * - Supports Themes: None, Light, Dark, Striped
+ * - Breakpoints: 600px, 900px, 1200px (mobile-first)
+ * - Typical Keywords: lists, bullets, ordered, unordered, ul, ol, checklist, features
+ * - Description: Lists block for displaying bulleted, numbered, or styled lists
+ * - Complexity: Low
+ * 
+ * EXPECTED STRUCTURE:
+ * - Main wrapper: .lists.block with data-block-name="lists"
+ * - List types:
+ *   - <ul> Unordered list (bullets)
+ *   - <ol> Ordered list (numbers)
+ *   - .checklist Styled list with checkmarks
+ *   - .feature-list Styled list with icons
+ * - List items: <li> elements
+ * - Optional: .list-wrapper (for constraining width)
+ * 
+ * LIST STYLE VARIATIONS (from XMP metadata):
+ * - Default bullets (disc)
+ * - Checkmarks (for feature/benefit lists)
+ * - Custom icons (for enhanced lists)
+ * - Numbers (1, 2, 3 or i, ii, iii)
+ * - No markers (clean list)
+ * 
+ * THEME VARIATIONS (from XMP metadata):
+ * - None: Default styling with standard bullets/numbers
+ * - Light: Light background, subtle styling
+ * - Dark: Dark background, light text
+ * - Striped: Alternating row backgrounds (zebra striping)
+ * 
+ * COLOR VARIABLES (must use these, not hex codes):
+ * - Text: var(--text-primary), var(--text-secondary)
+ * - List markers: var(--list-marker-color), var(--list-checkmark-color)
+ * - Backgrounds: var(--bg-light), var(--bg-dark), var(--bg-list-stripe)
+ * - Borders: var(--border-light)
+ */
+
+/* Base styles - Mobile first (0-599px) */
+/* XMP Context: Default lists block wrapper */
+.lists.block {
+  /* EDS Pattern: Standard block padding */
+  padding: 2rem 1rem;
+  
+  /* XMP: Default background */
+  background-color: transparent;
+}
+
+/* XMP Context: List wrapper for constraining width */
+.list-wrapper {
+  /* XMP: Constrain max width for readability */
+  max-width: 50rem; /* 800px */
+  
+  /* XMP: Center the list */
+  margin: 0 auto;
+}
+
+/* XMP Context: Unordered list (ul) - Default bullets */
+.lists.block ul {
+  /* XMP: Remove default margin/padding */
+  margin: 0;
+  padding: 0;
+  
+  /* XMP: Re-add left padding for bullets */
+  padding-left: 1.5rem; /* 24px - space for bullet */
+  
+  /* XMP: Space below list */
+  margin-bottom: 1.5rem;
+  
+  /* XMP: Use disc bullets by default */
+  list-style-type: disc;
+}
+
+/* XMP Context: Ordered list (ol) - Numbers */
+.lists.block ol {
+  /* XMP: Remove default margin/padding */
+  margin: 0;
+  padding: 0;
+  
+  /* XMP: Re-add left padding for numbers */
+  padding-left: 1.5rem; /* 24px */
+  
+  /* XMP: Space below list */
+  margin-bottom: 1.5rem;
+  
+  /* XMP: Use decimal numbers by default (1, 2, 3) */
+  list-style-type: decimal;
+}
+
+/* XMP Context: List items (li) */
+.lists.block li {
+  /* XMP Metadata: Body text size */
+  font-size: 1rem; /* 16px */
+  
+  /* XMP: Comfortable line height for readability */
+  line-height: 1.6;
+  
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary); /* NOT #000 */
+  
+  /* XMP: Space between list items */
+  margin-bottom: 0.75rem; /* 12px */
+  
+  /* XMP: Padding for multi-line items */
+  padding-left: 0.5rem; /* 8px - additional space from marker */
+}
+
+/* XMP Context: Last list item (no bottom margin) */
+.lists.block li:last-child {
+  margin-bottom: 0;
+}
+
+/* XMP Context: Nested lists (ul within li) */
+.lists.block li ul,
+.lists.block li ol {
+  /* XMP: Space above nested list */
+  margin-top: 0.75rem;
+  
+  /* XMP: Reduce bottom margin for nested */
+  margin-bottom: 0.75rem;
+}
+
+/* XMP Context: Nested unordered list uses circle bullets */
+.lists.block ul ul {
+  list-style-type: circle;
+}
+
+/* XMP Context: Third-level nested list uses square bullets */
+.lists.block ul ul ul {
+  list-style-type: square;
+}
+
+/* 
+ * VARIANT: Checklist (checkmark bullets)
+ * XMP Context: Styled list with green checkmarks for features/benefits
+ */
+.lists.block ul.checklist {
+  /* XMP: Remove default bullets */
+  list-style-type: none;
+  
+  /* XMP: Remove left padding (we'll use custom positioning) */
+  padding-left: 0;
+}
+
+.lists.block ul.checklist li {
+  /* XMP: Position relative for pseudo-element checkmark */
+  position: relative;
+  
+  /* XMP: Add left padding for checkmark space */
+  padding-left: 2rem; /* 32px - room for checkmark */
+  
+  /* XMP: Ensure text doesn't wrap under checkmark */
+  text-indent: 0;
+}
+
+/* XMP Context: Checkmark using pseudo-element */
+.lists.block ul.checklist li::before {
+  /* XMP: Checkmark character */
+  content: '✓';
+  
+  /* XMP: Position to the left */
+  position: absolute;
+  left: 0;
+  top: 0;
+  
+  /* XMP Theme: Checkmark color (typically green/success) */
+  color: var(--list-checkmark-color); /* NOT #28a745 */
+  
+  /* XMP: Bold checkmark */
+  font-weight: 700;
+  
+  /* XMP: Slightly larger than text */
+  font-size: 1.25rem; /* 20px */
+  
+  /* XMP: Align with text baseline */
+  line-height: 1.6;
+}
+
+/* 
+ * VARIANT: Feature List (custom icons)
+ * XMP Context: List with custom SVG icons instead of bullets
+ */
+.lists.block ul.feature-list {
+  /* XMP: Remove default bullets */
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.lists.block ul.feature-list li {
+  /* XMP: Flexbox for icon + text alignment */
+  display: flex;
+  align-items: flex-start;
+  
+  /* XMP: Space between items */
+  margin-bottom: 1rem;
+  
+  /* XMP: No extra padding (handled by flex) */
+  padding-left: 0;
+}
+
+/* XMP Context: Icon container in feature list */
+.lists.block ul.feature-list li .icon {
+  /* XMP: Fixed icon size */
+  width: 1.5rem; /* 24px */
+  height: 1.5rem;
+  
+  /* XMP: Don't shrink icon */
+  flex-shrink: 0;
+  
+  /* XMP: Space between icon and text */
+  margin-right: 0.75rem;
+  
+  /* XMP Theme: Icon color */
+  color: var(--list-marker-color); /* NOT #0066cc */
+}
+
+.lists.block ul.feature-list li .icon svg {
+  /* XMP: Fill container */
+  width: 100%;
+  height: 100%;
+  
+  /* XMP: Inherit color from parent */
+  fill: currentColor;
+}
+
+/* 
+ * VARIANT: Clean List (no bullets)
+ * XMP Context: List without any markers (clean text stack)
+ */
+.lists.block ul.clean,
+.lists.block ol.clean {
+  /* XMP: Remove all list styling */
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.lists.block ul.clean li,
+.lists.block ol.clean li {
+  /* XMP: No extra padding */
+  padding-left: 0;
+  
+  /* XMP: More space between items */
+  margin-bottom: 1rem;
+}
+
+/* 
+ * VARIANT: Two-Column List
+ * XMP Context: List items displayed in 2 columns (tablet+)
+ */
+.lists.block ul.two-column,
+.lists.block ol.two-column {
+  /* XMP: CSS columns for automatic two-column layout */
+  column-count: 1; /* Mobile: single column */
+  column-gap: 2rem;
+}
+
+@media (min-width: 600px) {
+  .lists.block ul.two-column,
+  .lists.block ol.two-column {
+    /* XMP Metadata: Two columns on tablet+ */
+    column-count: 2;
+  }
+}
+
+/* XMP Context: Prevent list items from breaking across columns */
+.lists.block ul.two-column li,
+.lists.block ol.two-column li {
+  break-inside: avoid;
+  page-break-inside: avoid; /* Fallback for older browsers */
+}
+
+/* EDS Responsive Breakpoints - DO NOT MODIFY structure */
+/* XMP Context: Tablet styles (600-899px) */
+@media (min-width: 600px) {
+  /* XMP: Increase block padding on tablet */
+  .lists.block {
+    padding: 3rem 2rem;
+  }
+  
+  /* XMP: Slightly larger text on tablet */
+  .lists.block li {
+    font-size: 1.0625rem; /* 17px */
+  }
+}
+
+/* XMP Context: Desktop styles (900px+) */
+@media (min-width: 900px) {
+  /* XMP: Maximum block padding on desktop */
+  .lists.block {
+    padding: 4rem 2rem;
+  }
+  
+  /* XMP: Larger text on desktop */
+  .lists.block li {
+    font-size: 1.125rem; /* 18px */
+  }
+  
+  /* XMP: More space between items on desktop */
+  .lists.block li {
+    margin-bottom: 1rem;
+  }
+}
+
+/* 
+ * THEME-SPECIFIC OVERRIDES (applied via section metadata)
+ * XMP Context: These styles are applied when theme is specified
+ */
+
+/* XMP Theme: Light variant */
+.lists.light {
+  /* Light background */
+  background-color: var(--bg-light); /* NOT #f9f9f9 */
+}
+
+.lists.light li {
+  /* Dark text on light background */
+  color: var(--text-primary);
+}
+
+/* XMP Theme: Dark variant */
+.lists.dark {
+  /* Dark background */
+  background-color: var(--bg-dark); /* NOT #1a1a1a */
+}
+
+.lists.dark li {
+  /* Light text on dark background */
+  color: var(--text-inverse); /* NOT #fff */
+}
+
+.lists.dark ul.checklist li::before {
+  /* Light checkmark on dark background */
+  color: var(--list-checkmark-color-inverse);
+}
+
+/* XMP Theme: Striped variant (alternating row backgrounds) */
+.lists.striped li:nth-child(odd) {
+  /* XMP: Light background for odd rows */
+  background-color: var(--bg-list-stripe); /* NOT #f5f5f5 */
+  
+  /* XMP: Add padding for stripe to be visible */
+  padding: 0.5rem;
+  padding-left: 1rem;
+  
+  /* XMP: Rounded corners */
+  border-radius: 0.25rem;
+}
+
+.lists.striped li:nth-child(even) {
+  /* XMP: Transparent background for even rows */
+  background-color: transparent;
+  
+  /* XMP: Matching padding for alignment */
+  padding: 0.5rem;
+  padding-left: 1rem;
+}
+
+/* 
+ * NUMBERED LIST VARIANTS
+ * XMP Context: Different numbering styles for ordered lists
+ */
+
+/* XMP: Roman numerals (i, ii, iii) */
+.lists.block ol.roman {
+  list-style-type: lower-roman;
+}
+
+/* XMP: Uppercase Roman numerals (I, II, III) */
+.lists.block ol.roman-upper {
+  list-style-type: upper-roman;
+}
+
+/* XMP: Letters (a, b, c) */
+.lists.block ol.alpha {
+  list-style-type: lower-alpha;
+}
+
+/* XMP: Uppercase letters (A, B, C) */
+.lists.block ol.alpha-upper {
+  list-style-type: upper-alpha;
+}
+
+/* XMP: Leading zeros (01, 02, 03) */
+.lists.block ol.decimal-leading-zero {
+  list-style-type: decimal-leading-zero;
+}
+
+/* 
+ * CUSTOM MARKER COLORS
+ * XMP Context: Override default bullet/number colors
+ */
+
+/* XMP: Custom bullet color */
+.lists.block ul li::marker {
+  color: var(--list-marker-color); /* NOT #0066cc */
+}
+
+/* XMP: Custom number color */
+.lists.block ol li::marker {
+  color: var(--list-marker-color);
+  font-weight: 600; /* Bold numbers */
+}
+
+/*
+ * ACCESSIBILITY ENHANCEMENTS
+ * XMP Context: Ensure lists are accessible
+ */
+
+/* XMP Accessibility: Ensure sufficient contrast */
+.lists.block li {
+  /* Contrast ratio must be at least 4.5:1 */
+  /* Handled by color variables */
+}
+
+/* XMP Accessibility: Links within lists */
+.lists.block li a {
+  /* XMP Theme: Link color */
+  color: var(--color-cta-primary);
+  
+  /* XMP: Underline for clarity */
+  text-decoration: underline;
+}
+
+.lists.block li a:focus {
+  /* Clear focus outline */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 2px;
+}
+
+/*
+ * XMP METADATA SUMMARY FOR AI AGENTS:
+ * 
+ * This CSS file defines the lists block styling with:
+ * - Semantic list types (ul, ol) with proper HTML structure
+ * - Multiple list style variants (checklist, feature-list, clean, two-column)
+ * - Theme support (None, Light, Dark, Striped)
+ * - Custom marker colors and styles
+ * - Nested list support (up to 3 levels)
+ * - Different numbering systems (decimal, roman, alpha)
+ * - Mobile-first responsive typography
+ * - CSS custom properties for all colors
+ * 
+ * LIST TYPES SUPPORTED:
+ * - ul: Unordered list (bullets: disc → circle → square for nested)
+ * - ol: Ordered list (numbers: 1, 2, 3 or i, ii, iii or a, b, c)
+ * - ul.checklist: Checkmark bullets (✓) for features/benefits
+ * - ul.feature-list: Custom icon bullets
+ * - ul.clean / ol.clean: No bullets/numbers
+ * - ul.two-column: Two-column layout (tablet+)
+ * 
+ * THEME VARIATIONS:
+ * - None: Default white background, dark text
+ * - Light: Light gray background (var(--bg-light))
+ * - Dark: Dark background, light text
+ * - Striped: Alternating row backgrounds (zebra pattern)
+ * 
+ * If the Figma frame differs from this reference block:
+ * - Check list type (bullets, numbers, checkmarks, icons, none)
+ * - Check if nested lists are present (2-3 levels)
+ * - Check bullet/number color (should use var(--list-marker-color))
+ * - Check spacing between items (0.75rem default, 1rem desktop)
+ * - Check if two-column layout is used
+ * - Check if striped background is present
+ * - Check text size (1rem mobile, 1.125rem desktop)
+ * - Check if custom icons are used instead of bullets
+ * 
+ * Common gaps to look for:
+ * - Figma shows checkmarks → Apply .checklist class
+ * - Figma shows custom icons → Apply .feature-list class
+ * - Figma shows no bullets → Apply .clean class
+ * - Figma shows two columns → Apply .two-column class
+ * - Figma shows striped rows → Apply .striped theme
+ * - Figma shows roman numerals → Apply .roman class
+ * - Figma shows different bullet color → Update var(--list-marker-color)
+ * - Figma uses hex colors → Must convert to var() custom properties
+ * - Figma shows larger spacing → Adjust margin-bottom on li
+ * 
+ * Nested list behavior:
+ * - Level 1: disc bullets (●)
+ * - Level 2: circle bullets (○)
+ * - Level 3: square bullets (■)
+ * - Ordered lists: Numbers at all levels (can override)
+ * 
+ * Accessibility requirements:
+ * - Use semantic <ul> and <ol> (not divs styled as lists)
+ * - Ensure proper heading hierarchy before lists
+ * - Maintain 4.5:1 contrast ratio for text
+ * - Ensure links within lists are underlined
+ * - Don't use color alone to convey meaning
+ */
