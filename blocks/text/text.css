@@ -1,0 +1,552 @@
+/**
+ * EDS Block: Text
+ * 
+ * XMP METADATA CONTEXT:
+ * - Block Type: text (eds:blockType=text)
+ * - Supports Themes: None, Light, Dark
+ * - Breakpoints: 600px, 900px, 1200px (mobile-first)
+ * - Typical Keywords: text, content, body, paragraph, prose, article, copy
+ * - Description: Text block for body content, paragraphs, and rich text formatting
+ * - Complexity: Low
+ * 
+ * EXPECTED STRUCTURE:
+ * - Main wrapper: .text.block with data-block-name="text"
+ * - Content wrapper: .text-content (for constraining width)
+ * - Text elements:
+ *   - <p> Paragraphs (body text)
+ *   - <strong> or <b> Bold text
+ *   - <em> or <i> Italic text
+ *   - <a> Links within text
+ *   - <blockquote> Quoted text
+ *   - <code> Inline code
+ *   - <pre> Code blocks
+ * 
+ * TEXT FORMATTING (from XMP metadata):
+ * - Body text: 16px (1rem) mobile, 18px (1.125rem) desktop
+ * - Line height: 1.6-1.8 for readability
+ * - Max width: 50-60rem (800-960px) for optimal reading
+ * - Paragraph spacing: 1-1.5rem between paragraphs
+ * 
+ * THEME VARIATIONS (from XMP metadata):
+ * - None: Default text (dark text on light/transparent background)
+ * - Light: Light background, dark text
+ * - Dark: Dark background, light text
+ * 
+ * COLOR VARIABLES (must use these, not hex codes):
+ * - Text: var(--text-primary), var(--text-secondary)
+ * - Links: var(--color-cta-primary), var(--color-cta-hover)
+ * - Backgrounds: var(--bg-light), var(--bg-dark)
+ * - Blockquote: var(--border-accent), var(--bg-blockquote)
+ * - Code: var(--bg-code), var(--text-code)
+ */
+
+/* Base styles - Mobile first (0-599px) */
+/* XMP Context: Default text block wrapper */
+.text.block {
+  /* EDS Pattern: Standard block padding */
+  padding: 2rem 1rem;
+  
+  /* XMP: Default background */
+  background-color: transparent;
+}
+
+/* XMP Context: Content wrapper for constraining text width */
+.text-content {
+  /* XMP Metadata: Optimal reading width (65-75 characters per line) */
+  max-width: 50rem; /* 800px */
+  
+  /* XMP: Center the content */
+  margin: 0 auto;
+}
+
+/* XMP Context: Paragraph (body text) */
+.text.block p {
+  /* XMP Metadata: Body text size on mobile */
+  font-size: 1rem; /* 16px */
+  
+  /* XMP: Optimal line height for readability */
+  line-height: 1.6;
+  
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary); /* NOT #000 */
+  
+  /* XMP: Regular weight for body text */
+  font-weight: 400;
+  
+  /* XMP: Space between paragraphs */
+  margin-bottom: 1.25rem; /* 20px */
+  
+  /* XMP: Remove top margin */
+  margin-top: 0;
+}
+
+/* XMP Context: Last paragraph (no bottom margin) */
+.text.block p:last-child {
+  margin-bottom: 0;
+}
+
+/* XMP Context: First paragraph (optional larger "drop cap" style) */
+.text.block p.lead {
+  /* XMP: Slightly larger for intro paragraph */
+  font-size: 1.125rem; /* 18px */
+  
+  /* XMP: Slightly bolder */
+  font-weight: 500;
+  
+  /* XMP Theme: Can use secondary color for emphasis */
+  color: var(--text-primary);
+}
+
+/* XMP Context: Strong/Bold text */
+.text.block strong,
+.text.block b {
+  /* XMP: Bold weight */
+  font-weight: 700;
+  
+  /* XMP: Inherit color from parent */
+  color: inherit;
+}
+
+/* XMP Context: Emphasis/Italic text */
+.text.block em,
+.text.block i {
+  /* XMP: Italic style */
+  font-style: italic;
+  
+  /* XMP: Inherit color from parent */
+  color: inherit;
+}
+
+/* XMP Context: Links within text */
+.text.block a {
+  /* XMP Theme: Link color */
+  color: var(--color-cta-primary); /* NOT #0066cc */
+  
+  /* XMP: Underline for link affordance */
+  text-decoration: underline;
+  
+  /* XMP: Smooth color transition */
+  transition: color 0.3s ease;
+}
+
+/* XMP Context: Link hover state */
+.text.block a:hover {
+  /* XMP Theme: Darker color on hover */
+  color: var(--color-cta-hover); /* NOT #0052a3 */
+}
+
+/* XMP Context: Link focus state (keyboard navigation) */
+.text.block a:focus {
+  /* XMP Accessibility: Clear focus outline */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 2px;
+}
+
+/* XMP Context: Blockquote (quoted text) */
+.text.block blockquote {
+  /* XMP: Left border accent */
+  border-left: 4px solid var(--border-accent); /* NOT #0066cc */
+  
+  /* XMP: Padding for spacing from border */
+  padding-left: 1.5rem; /* 24px */
+  
+  /* XMP: Subtle background */
+  background-color: var(--bg-blockquote); /* NOT #f5f5f5 */
+  
+  /* XMP: Padding around content */
+  padding: 1rem 1rem 1rem 1.5rem;
+  
+  /* XMP: Spacing around blockquote */
+  margin: 1.5rem 0;
+  
+  /* XMP: Slightly larger or italic text */
+  font-style: italic;
+  font-size: 1.0625rem; /* 17px */
+  
+  /* XMP Theme: Secondary text color (slightly muted) */
+  color: var(--text-secondary); /* NOT #666 */
+}
+
+/* XMP Context: Paragraph inside blockquote */
+.text.block blockquote p {
+  /* XMP: Remove bottom margin from last paragraph in blockquote */
+  margin-bottom: 0;
+}
+
+.text.block blockquote p:not(:last-child) {
+  /* XMP: Space between multiple paragraphs in blockquote */
+  margin-bottom: 1rem;
+}
+
+/* XMP Context: Blockquote citation/source */
+.text.block blockquote cite {
+  /* XMP: Not italic (already italic from blockquote) */
+  font-style: normal;
+  
+  /* XMP: Smaller text */
+  font-size: 0.875rem; /* 14px */
+  
+  /* XMP: Prefix with em dash */
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.text.block blockquote cite::before {
+  content: '— ';
+}
+
+/* XMP Context: Inline code */
+.text.block code {
+  /* XMP Theme: Code background */
+  background-color: var(--bg-code); /* NOT #f4f4f4 */
+  
+  /* XMP Theme: Code text color */
+  color: var(--text-code); /* NOT #c7254e */
+  
+  /* XMP: Monospace font */
+  font-family: 'Courier New', Courier, monospace;
+  
+  /* XMP: Slightly smaller than body text */
+  font-size: 0.875rem; /* 14px */
+  
+  /* XMP: Padding around code */
+  padding: 0.125rem 0.375rem; /* 2px 6px */
+  
+  /* XMP: Rounded corners */
+  border-radius: 0.25rem; /* 4px */
+  
+  /* XMP: Prevent line breaks in inline code */
+  white-space: nowrap;
+}
+
+/* XMP Context: Code block (preformatted text) */
+.text.block pre {
+  /* XMP Theme: Dark background for code blocks */
+  background-color: var(--bg-code-block); /* NOT #2d2d2d */
+  
+  /* XMP Theme: Light text on dark background */
+  color: var(--text-code-block); /* NOT #f8f8f2 */
+  
+  /* XMP: Padding around code block */
+  padding: 1.5rem;
+  
+  /* XMP: Rounded corners */
+  border-radius: 0.5rem; /* 8px */
+  
+  /* XMP: Allow horizontal scroll for long lines */
+  overflow-x: auto;
+  
+  /* XMP: Spacing around code block */
+  margin: 1.5rem 0;
+  
+  /* XMP: Monospace font */
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+}
+
+/* XMP Context: Code inside pre (don't double-style) */
+.text.block pre code {
+  /* XMP: Reset inline code styles */
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+  white-space: pre; /* Allow wrapping in code blocks */
+}
+
+/* XMP Context: Horizontal rule (divider) */
+.text.block hr {
+  /* XMP: Subtle border */
+  border: none;
+  border-top: 1px solid var(--border-light); /* NOT #e0e0e0 */
+  
+  /* XMP: Spacing around divider */
+  margin: 2rem 0;
+}
+
+/* XMP Context: Small text (fine print) */
+.text.block small {
+  /* XMP: Smaller font size */
+  font-size: 0.875rem; /* 14px */
+  
+  /* XMP Theme: Secondary text color */
+  color: var(--text-secondary);
+}
+
+/* XMP Context: Mark/Highlight text */
+.text.block mark {
+  /* XMP Theme: Highlight background */
+  background-color: var(--bg-highlight); /* NOT #fff3cd */
+  
+  /* XMP Theme: Dark text on highlight */
+  color: var(--text-primary);
+  
+  /* XMP: Padding for breathing room */
+  padding: 0.125rem 0.25rem;
+}
+
+/* XMP Context: Subscript and Superscript */
+.text.block sub,
+.text.block sup {
+  /* XMP: Smaller font */
+  font-size: 0.75rem; /* 12px */
+  
+  /* XMP: Vertical alignment */
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.text.block sup {
+  /* XMP: Superscript (raised) */
+  top: -0.5em;
+}
+
+.text.block sub {
+  /* XMP: Subscript (lowered) */
+  bottom: -0.25em;
+}
+
+/* EDS Responsive Breakpoints - DO NOT MODIFY structure */
+/* XMP Context: Tablet styles (600-899px) */
+@media (min-width: 600px) {
+  /* XMP: Increase block padding on tablet */
+  .text.block {
+    padding: 3rem 2rem;
+  }
+  
+  /* XMP Metadata: Slightly larger text on tablet */
+  .text.block p {
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.7;
+  }
+  
+  /* XMP: Wider content on tablet */
+  .text-content {
+    max-width: 55rem; /* 880px */
+  }
+}
+
+/* XMP Context: Desktop styles (900px+) */
+@media (min-width: 900px) {
+  /* XMP: Maximum block padding on desktop */
+  .text.block {
+    padding: 4rem 2rem;
+  }
+  
+  /* XMP Metadata: Larger text for desktop readability */
+  .text.block p {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.8;
+  }
+  
+  /* XMP: Optimal reading width on desktop */
+  .text-content {
+    max-width: 60rem; /* 960px - 65-75 characters per line */
+  }
+  
+  /* XMP: More space between paragraphs on desktop */
+  .text.block p {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* XMP: Larger lead paragraph on desktop */
+  .text.block p.lead {
+    font-size: 1.25rem; /* 20px */
+  }
+  
+  /* XMP: Larger blockquote on desktop */
+  .text.block blockquote {
+    font-size: 1.125rem; /* 18px */
+    padding: 1.5rem 1.5rem 1.5rem 2rem;
+  }
+}
+
+/* 
+ * THEME-SPECIFIC OVERRIDES (applied via section metadata)
+ * XMP Context: These styles are applied when theme is specified
+ */
+
+/* XMP Theme: Light variant */
+.text.light {
+  /* Light background */
+  background-color: var(--bg-light); /* NOT #f9f9f9 */
+}
+
+.text.light p,
+.text.light strong,
+.text.light em {
+  /* Dark text on light background */
+  color: var(--text-primary);
+}
+
+/* XMP Theme: Dark variant */
+.text.dark {
+  /* Dark background */
+  background-color: var(--bg-dark); /* NOT #1a1a1a */
+}
+
+.text.dark p,
+.text.dark strong,
+.text.dark em {
+  /* Light text on dark background */
+  color: var(--text-inverse); /* NOT #fff */
+}
+
+.text.dark a {
+  /* Lighter link color on dark background */
+  color: var(--color-cta-primary-inverse);
+}
+
+.text.dark blockquote {
+  /* Darker border on dark background */
+  border-left-color: var(--border-accent-inverse);
+  background-color: var(--bg-blockquote-dark);
+  color: var(--text-secondary-inverse);
+}
+
+.text.dark code {
+  background-color: var(--bg-code-dark);
+  color: var(--text-code-inverse);
+}
+
+/*
+ * ACCESSIBILITY ENHANCEMENTS
+ * XMP Context: Ensure text meets WCAG standards
+ */
+
+/* XMP Accessibility: Ensure minimum contrast ratios */
+.text.block p {
+  /* 4.5:1 contrast ratio for normal text (handled by color variables) */
+}
+
+/* XMP Accessibility: Focus on links */
+.text.block a:focus-visible {
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+/* XMP Accessibility: Selection color */
+.text.block ::selection {
+  background-color: var(--color-selection); /* NOT rgba(0,102,204,0.3) */
+  color: inherit;
+}
+
+/*
+ * TYPOGRAPHY UTILITIES
+ * XMP Context: Optional utility classes for text formatting
+ */
+
+/* XMP Utility: Text alignment */
+.text.block .text-left {
+  text-align: left;
+}
+
+.text.block .text-center {
+  text-align: center;
+}
+
+.text.block .text-right {
+  text-align: right;
+}
+
+/* XMP Utility: Text size variants */
+.text.block .text-small {
+  font-size: 0.875rem; /* 14px */
+}
+
+.text.block .text-large {
+  font-size: 1.25rem; /* 20px */
+}
+
+/* XMP Utility: Drop cap (first letter styling) */
+.text.block p.drop-cap::first-letter {
+  /* XMP: Large first letter */
+  font-size: 3.5rem;
+  line-height: 0.85;
+  float: left;
+  margin-right: 0.5rem;
+  margin-top: 0.125rem;
+  
+  /* XMP Theme: Accent color for drop cap */
+  color: var(--color-accent);
+  
+  /* XMP: Bold weight */
+  font-weight: 700;
+}
+
+/*
+ * XMP METADATA SUMMARY FOR AI AGENTS:
+ * 
+ * This CSS file defines the text block styling with:
+ * - Optimal typography for reading (16-18px body text, 1.6-1.8 line height)
+ * - Constrained width for readability (50-60rem max)
+ * - Rich text formatting (bold, italic, links, blockquotes, code)
+ * - Theme support (None, Light, Dark)
+ * - Mobile-first responsive typography
+ * - CSS custom properties for all colors
+ * - Full accessibility (contrast, focus states, selection)
+ * 
+ * TYPOGRAPHY SCALE:
+ * - Body text: 16px mobile → 17px tablet → 18px desktop
+ * - Line height: 1.6 mobile → 1.7 tablet → 1.8 desktop
+ * - Lead paragraph: 18px mobile → 20px desktop
+ * - Small text: 14px (0.875rem)
+ * - Code: 14px (0.875rem) monospace
+ * 
+ * CONTENT WIDTH:
+ * - Mobile: Full width (with 1rem padding)
+ * - Tablet: 55rem (880px) max
+ * - Desktop: 60rem (960px) max - optimal for 65-75 characters per line
+ * 
+ * RICH TEXT ELEMENTS SUPPORTED:
+ * - <p> Paragraphs (body text)
+ * - <strong>, <b> Bold text (700 weight)
+ * - <em>, <i> Italic text
+ * - <a> Links (underlined, colored)
+ * - <blockquote> Quoted text (left border, background, italic)
+ * - <code> Inline code (monospace, gray background)
+ * - <pre> Code blocks (dark background, scrollable)
+ * - <hr> Horizontal dividers
+ * - <small> Fine print text
+ * - <mark> Highlighted text
+ * - <sub>, <sup> Subscript/superscript
+ * 
+ * If the Figma frame differs from this reference block:
+ * - Check text size (16px, 17px, 18px at different breakpoints)
+ * - Check line height (should be 1.6-1.8 for readability)
+ * - Check max width (should be 50-60rem for optimal reading)
+ * - Check paragraph spacing (1.25-1.5rem between paragraphs)
+ * - Check if rich text elements are present (blockquotes, code, etc.)
+ * - Check text alignment (default left, can be center/right)
+ * - Check if drop cap or lead paragraph styling is used
+ * - Check link styling (should be underlined + colored)
+ * 
+ * Common gaps to look for:
+ * - Figma shows larger text → Adjust font-size values
+ * - Figma shows tighter line height → Adjust line-height (but maintain readability)
+ * - Figma shows wider content → Increase max-width (but keep under 75 characters/line)
+ * - Figma shows centered text → Add .text-center class
+ * - Figma shows blockquote → Ensure blockquote styles are applied
+ * - Figma shows code snippets → Ensure code/pre styles are applied
+ * - Figma shows drop cap → Apply .drop-cap class to first paragraph
+ * - Figma uses hex colors → Must convert to var() custom properties
+ * 
+ * Readability best practices:
+ * - Line length: 50-75 characters per line (optimal 65)
+ * - Line height: 1.5-2.0 (optimal 1.6-1.8)
+ * - Font size: 16-18px for body text
+ * - Paragraph spacing: 1-1.5em (space between paragraphs)
+ * - Contrast: 4.5:1 minimum for normal text (WCAG AA)
+ * - Links: Always underlined (don't rely on color alone)
+ * 
+ * Accessibility requirements (WCAG):
+ * - 4.5:1 contrast for body text (handled by color variables)
+ * - Links must be underlined (don't rely on color alone)
+ * - Focus indicators visible (2px outline, 2px offset)
+ * - Text resizable up to 200% without loss of content
+ * - Line length not too long (max 80 characters)
+ * - Line height at least 1.5 (we use 1.6-1.8)
+ */
