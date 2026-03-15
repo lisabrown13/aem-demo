@@ -1,0 +1,599 @@
+/**
+ * EDS Block: Links
+ * 
+ * XMP METADATA CONTEXT:
+ * - Block Type: links (eds:blockType=links)
+ * - Supports Themes: None, Light, Dark
+ * - Breakpoints: 600px, 900px, 1200px (mobile-first)
+ * - Typical Keywords: links, navigation, resources, references, related, external
+ * - Description: Links block for displaying lists of related links, resources, or navigation
+ * - Complexity: Low
+ * 
+ * EXPECTED STRUCTURE:
+ * - Main wrapper: .links.block with data-block-name="links"
+ * - Links container: .links-wrapper or .link-list
+ * - Link elements:
+ *   - <a> Link elements (can be in <ul> or standalone)
+ *   - Optional: .link-item wrapper for styling
+ *   - Optional: .link-icon for icons before/after links
+ *   - Optional: .link-description for link descriptions
+ * 
+ * LINK LAYOUT VARIATIONS (from XMP metadata):
+ * - Vertical list: Stacked links (default)
+ * - Horizontal row: Links in a row (navigation-style)
+ * - Grid: Multi-column link grid
+ * - Cards: Links styled as card blocks
+ * 
+ * LINK STYLE VARIATIONS (from XMP metadata):
+ * - Plain: Underlined text links (default)
+ * - Button-style: Links styled as buttons
+ * - Arrow links: Links with arrow icons
+ * - Icon links: Links with custom icons
+ * - Breadcrumb: Connected links with separators
+ * 
+ * THEME VARIATIONS (from XMP metadata):
+ * - None: Default link colors (brand colors)
+ * - Light: Links on light background
+ * - Dark: Links on dark background (light text)
+ * 
+ * COLOR VARIABLES (must use these, not hex codes):
+ * - Links: var(--color-cta-primary), var(--color-cta-hover)
+ * - Text: var(--text-primary), var(--text-secondary), var(--text-inverse)
+ * - Backgrounds: var(--bg-light), var(--bg-dark), var(--bg-link-card)
+ * - Borders: var(--border-light), var(--border-accent)
+ * - Icons: var(--icon-primary), var(--icon-accent)
+ */
+
+/* Base styles - Mobile first (0-599px) */
+/* XMP Context: Default links block wrapper */
+.links.block {
+  /* EDS Pattern: Standard block padding */
+  padding: 2rem 1rem;
+  
+  /* XMP: Default background */
+  background-color: transparent;
+}
+
+/* XMP Context: Links wrapper/container */
+.links-wrapper,
+.link-list {
+  /* XMP: Constrain max width */
+  max-width: 50rem; /* 800px */
+  margin: 0 auto;
+  
+  /* XMP: Remove default list styles if using <ul> */
+  list-style: none;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* XMP Context: Individual link item */
+.link-item {
+  /* XMP: Spacing between links */
+  margin-bottom: 1rem; /* 16px */
+}
+
+.link-item:last-child {
+  /* XMP: No margin on last item */
+  margin-bottom: 0;
+}
+
+/* XMP Context: Link element (anchor tag) */
+.links.block a {
+  /* XMP Theme: Link color */
+  color: var(--color-cta-primary); /* NOT #0066cc */
+  
+  /* XMP: Underline for link affordance */
+  text-decoration: underline;
+  
+  /* XMP: Font size */
+  font-size: 1rem; /* 16px */
+  
+  /* XMP: Line height */
+  line-height: 1.5;
+  
+  /* XMP: Smooth color transition */
+  transition: color 0.3s ease;
+  
+  /* XMP: Display for icon alignment */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem; /* Space between icon and text */
+}
+
+/* XMP Context: Link hover state */
+.links.block a:hover {
+  /* XMP Theme: Darker color on hover */
+  color: var(--color-cta-hover); /* NOT #0052a3 */
+}
+
+/* XMP Context: Link focus state (keyboard navigation) */
+.links.block a:focus {
+  /* XMP Accessibility: Clear focus outline */
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 2px;
+  border-radius: 0.125rem;
+}
+
+/* XMP Context: Visited link state */
+.links.block a:visited {
+  /* XMP: Slightly different color for visited links */
+  color: var(--color-cta-visited); /* NOT #551a8b */
+}
+
+/* 
+ * VARIANT: Arrow Links (links with arrow icons)
+ * XMP Context: Links with right-pointing arrows
+ */
+.links.block.arrow-links a::after {
+  /* XMP: Arrow character */
+  content: '→';
+  
+  /* XMP: Space before arrow */
+  margin-left: 0.5rem;
+  
+  /* XMP: Smooth transition for arrow movement */
+  transition: transform 0.3s ease;
+  
+  /* XMP: Display inline to prevent wrapping */
+  display: inline-block;
+}
+
+.links.block.arrow-links a:hover::after {
+  /* XMP: Arrow moves right on hover */
+  transform: translateX(4px);
+}
+
+/* 
+ * VARIANT: External Links (with external icon indicator)
+ * XMP Context: Links that open in new tab
+ */
+.links.block a[target="_blank"]::after,
+.links.block a.external::after {
+  /* XMP: External link icon */
+  content: '↗';
+  
+  /* XMP: Space before icon */
+  margin-left: 0.25rem;
+  
+  /* XMP: Smaller icon */
+  font-size: 0.875rem;
+  
+  /* XMP: Visual indicator */
+  opacity: 0.7;
+}
+
+/* 
+ * VARIANT: Icon Links (links with custom icons)
+ * XMP Context: Links with SVG icons before text
+ */
+.link-item .link-icon {
+  /* XMP: Icon size */
+  width: 1.25rem; /* 20px */
+  height: 1.25rem;
+  
+  /* XMP: Ensure consistent sizing */
+  flex-shrink: 0;
+  
+  /* XMP Theme: Icon color matches link */
+  color: currentColor;
+}
+
+.link-item .link-icon svg {
+  /* XMP: Fill container */
+  width: 100%;
+  height: 100%;
+  
+  /* XMP: Inherit color from parent */
+  fill: currentColor;
+}
+
+/* 
+ * VARIANT: Link with Description
+ * XMP Context: Links with subtitle/description text
+ */
+.link-item.with-description {
+  /* XMP: Flexbox for vertical layout */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  
+  /* XMP: More spacing between items with descriptions */
+  margin-bottom: 1.5rem;
+}
+
+.link-item .link-description {
+  /* XMP: Smaller text for description */
+  font-size: 0.875rem; /* 14px */
+  
+  /* XMP: Line height */
+  line-height: 1.5;
+  
+  /* XMP Theme: Secondary text color */
+  color: var(--text-secondary); /* NOT #666 */
+  
+  /* XMP: Remove margin */
+  margin: 0;
+}
+
+/* 
+ * VARIANT: Card Links (links styled as cards)
+ * XMP Context: Links in card format with background
+ */
+.links.block.card-links .link-item {
+  /* XMP: Card background */
+  background-color: var(--bg-link-card); /* NOT #fff */
+  
+  /* XMP: Card border */
+  border: 1px solid var(--border-light); /* NOT #e0e0e0 */
+  
+  /* XMP: Rounded corners */
+  border-radius: 0.5rem; /* 8px */
+  
+  /* XMP: Padding inside card */
+  padding: 1.25rem;
+  
+  /* XMP: Smooth transition */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.links.block.card-links .link-item:hover {
+  /* XMP: Lift card on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.links.block.card-links a {
+  /* XMP: Remove underline in cards */
+  text-decoration: none;
+  
+  /* XMP: Larger text in cards */
+  font-size: 1.0625rem; /* 17px */
+  font-weight: 600;
+}
+
+.links.block.card-links a:hover {
+  /* XMP: Underline on hover for affordance */
+  text-decoration: underline;
+}
+
+/* 
+ * VARIANT: Button-Style Links
+ * XMP Context: Links styled as buttons
+ */
+.links.block.button-links a {
+  /* XMP: Button styling */
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-cta-primary);
+  color: var(--text-inverse); /* NOT #fff */
+  text-decoration: none;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.links.block.button-links a:hover {
+  background-color: var(--color-cta-hover);
+  transform: translateY(-2px);
+}
+
+.links.block.button-links a:visited {
+  /* XMP: Same color for visited (buttons don't show visited state) */
+  color: var(--text-inverse);
+}
+
+/* 
+ * VARIANT: Horizontal Links (navigation-style)
+ * XMP Context: Links in a horizontal row
+ */
+.links.block.horizontal .links-wrapper {
+  /* XMP: Flexbox for horizontal layout */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  
+  /* XMP: Center on mobile */
+  justify-content: center;
+}
+
+.links.block.horizontal .link-item {
+  /* XMP: No bottom margin (gap handles spacing) */
+  margin-bottom: 0;
+}
+
+/* 
+ * VARIANT: Grid Links (multi-column)
+ * XMP Context: Links in grid layout
+ */
+.links.block.grid .links-wrapper {
+  /* XMP: CSS Grid layout */
+  display: grid;
+  
+  /* XMP Metadata: Single column on mobile */
+  grid-template-columns: 1fr;
+  
+  /* XMP: Gap between links */
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .links.block.grid .links-wrapper {
+    /* XMP Metadata: 2 columns on tablet */
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .links.block.grid .links-wrapper {
+    /* XMP Metadata: 3 columns on desktop */
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 
+ * VARIANT: Breadcrumb Links
+ * XMP Context: Connected links with separators
+ */
+.links.block.breadcrumb .links-wrapper {
+  /* XMP: Horizontal layout */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.links.block.breadcrumb .link-item {
+  /* XMP: No bottom margin */
+  margin-bottom: 0;
+  
+  /* XMP: Display flex for separator */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.links.block.breadcrumb .link-item:not(:last-child)::after {
+  /* XMP: Separator between breadcrumb items */
+  content: '/';
+  color: var(--text-secondary);
+}
+
+.links.block.breadcrumb a {
+  /* XMP: No underline for breadcrumbs (space is limited) */
+  text-decoration: none;
+}
+
+.links.block.breadcrumb a:hover {
+  /* XMP: Underline on hover */
+  text-decoration: underline;
+}
+
+/* XMP: Current page in breadcrumb (not a link) */
+.links.block.breadcrumb .link-item.current {
+  /* XMP Theme: Primary text color */
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* 
+ * VARIANT: Divider Links (with horizontal rules)
+ * XMP Context: Links separated by lines
+ */
+.links.block.dividers .link-item {
+  /* XMP: Border between items */
+  border-bottom: 1px solid var(--border-light);
+  
+  /* XMP: Padding for spacing */
+  padding: 1rem 0;
+  
+  /* XMP: No margin (border provides separation) */
+  margin-bottom: 0;
+}
+
+.links.block.dividers .link-item:last-child {
+  /* XMP: No border on last item */
+  border-bottom: none;
+}
+
+/* EDS Responsive Breakpoints - DO NOT MODIFY structure */
+/* XMP Context: Tablet styles (600-899px) */
+@media (min-width: 600px) {
+  /* XMP: Increase block padding on tablet */
+  .links.block {
+    padding: 3rem 2rem;
+  }
+  
+  /* XMP: Slightly larger links on tablet */
+  .links.block a {
+    font-size: 1.0625rem; /* 17px */
+  }
+  
+  /* XMP: More spacing between links */
+  .link-item {
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* XMP Context: Desktop styles (900px+) */
+@media (min-width: 900px) {
+  /* XMP: Maximum block padding on desktop */
+  .links.block {
+    padding: 4rem 2rem;
+  }
+  
+  /* XMP: Larger links on desktop */
+  .links.block a {
+    font-size: 1.125rem; /* 18px */
+  }
+  
+  /* XMP: Maximum spacing between links */
+  .link-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* XMP: Left-align horizontal links on desktop */
+  .links.block.horizontal .links-wrapper {
+    justify-content: flex-start;
+  }
+}
+
+/* 
+ * THEME-SPECIFIC OVERRIDES (applied via section metadata)
+ * XMP Context: These styles are applied when theme is specified
+ */
+
+/* XMP Theme: Light variant */
+.links.light {
+  background-color: var(--bg-light); /* NOT #f9f9f9 */
+}
+
+.links.light a {
+  color: var(--color-cta-primary);
+}
+
+/* XMP Theme: Dark variant */
+.links.dark {
+  background-color: var(--bg-dark); /* NOT #1a1a1a */
+}
+
+.links.dark a {
+  /* XMP: Lighter link color on dark background */
+  color: var(--color-cta-primary-inverse); /* NOT #66b3ff */
+}
+
+.links.dark a:visited {
+  color: var(--color-cta-visited-inverse);
+}
+
+.links.dark .link-description {
+  color: var(--text-secondary-inverse);
+}
+
+.links.dark.card-links .link-item {
+  background-color: var(--bg-link-card-dark);
+  border-color: var(--border-dark);
+}
+
+/*
+ * ACCESSIBILITY ENHANCEMENTS
+ * XMP Context: Ensure links meet WCAG standards
+ */
+
+/* XMP Accessibility: All links must have visible focus indicator */
+.links.block a:focus-visible {
+  outline: 2px solid var(--color-cta-primary);
+  outline-offset: 4px;
+  border-radius: 0.125rem;
+}
+
+/* XMP Accessibility: Ensure minimum click target size */
+.links.block a {
+  min-height: 44px;
+  min-width: 44px;
+  /* Padding for touch targets */
+  padding: 0.5rem 0;
+}
+
+/* XMP Accessibility: Skip link (for keyboard navigation) */
+.skip-link {
+  /* XMP: Position off-screen */
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  /* XMP: Show on focus */
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: auto;
+  height: auto;
+  padding: 1rem;
+  background-color: var(--color-cta-primary);
+  color: var(--text-inverse);
+  z-index: 9999;
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+
+/*
+ * XMP METADATA SUMMARY FOR AI AGENTS:
+ * 
+ * This CSS file defines the links block styling with:
+ * - Multiple layout variants (vertical list, horizontal row, grid, breadcrumb)
+ * - Multiple style variants (plain, arrow, icon, card, button, divider)
+ * - External link indicators
+ * - Link descriptions/subtitles
+ * - Theme support (None, Light, Dark)
+ * - Mobile-first responsive typography
+ * - CSS custom properties for all colors
+ * - Full accessibility (focus states, min sizes, visited states)
+ * 
+ * LINK VARIANTS:
+ * - Plain: Underlined text links (default)
+ * - Arrow: Links with → arrow on right
+ * - Icon: Links with custom SVG icons
+ * - Card: Links styled as card blocks with background
+ * - Button: Links styled as buttons (filled background)
+ * - Breadcrumb: Connected links with / separators
+ * - Divider: Links separated by horizontal rules
+ * 
+ * LAYOUT PATTERNS:
+ * - Vertical list: Stacked links (default)
+ * - Horizontal: Links in a row (flex)
+ * - Grid: 1→2→3 columns (mobile→tablet→desktop)
+ * - Breadcrumb: Horizontal with separators
+ * 
+ * If the Figma frame differs from this reference block:
+ * - Check layout (vertical, horizontal, grid, breadcrumb)
+ * - Check link style (plain, arrow, icon, card, button)
+ * - Check if descriptions present (subtitle below link)
+ * - Check if external link icons shown (↗)
+ * - Check spacing between links (1-1.5rem)
+ * - Check if dividers between links
+ * - Check number of columns in grid (2, 3, 4)
+ * - Check if visited state is different color
+ * 
+ * Common gaps to look for:
+ * - Figma shows arrow links → Apply .arrow-links class
+ * - Figma shows card-style links → Apply .card-links class
+ * - Figma shows button-style links → Apply .button-links class
+ * - Figma shows horizontal layout → Apply .horizontal class
+ * - Figma shows grid layout → Apply .grid class
+ * - Figma shows breadcrumb → Apply .breadcrumb class
+ * - Figma shows dividers → Apply .dividers class
+ * - Figma shows link descriptions → Add .link-description elements
+ * - Figma shows custom icons → Add .link-icon elements
+ * - Figma uses hex colors → Must convert to var() custom properties
+ * 
+ * Accessibility requirements (WCAG):
+ * - 4.5:1 contrast ratio for link text
+ * - Links must be underlined (don't rely on color alone)
+ * - Visited links should have different color (optional but recommended)
+ * - Focus indicators visible (2px outline, 4px offset)
+ * - Minimum 44x44px touch target
+ * - External links should indicate they open in new tab
+ * - Use descriptive link text (not "click here")
+ * - Skip links for keyboard navigation
+ * 
+ * Link best practices:
+ * - Link text should describe destination
+ * - Avoid "click here" or "read more" without context
+ * - External links: target="_blank" + rel="noopener noreferrer"
+ * - Downloaded files should indicate file type and size
+ * - Phone numbers: <a href="tel:+1234567890">
+ * - Email addresses: <a href="mailto:email@example.com">
+ * - Current page in navigation should not be a link
+ * 
+ * Visited link state:
+ * - Default: Different color for visited links
+ * - Button-style: Don't show visited state (always same color)
+ * - Navigation: Often don't show visited state
+ * - Content links: Usually show visited state
+ */ 
